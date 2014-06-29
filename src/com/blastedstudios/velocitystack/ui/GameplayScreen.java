@@ -59,7 +59,9 @@ public class GameplayScreen extends AbstractScreen {
 	@Override public void render(float dt){
 		super.render(dt);
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
-			car.gas(dt);
+			car.gas(dt, true);
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+			car.gas(dt, false);
 		world.step(Math.min(1f/20f, dt), 10, 10);
 		camera.position.set(car.getPosition().x, car.getPosition().y, 0);
 		camera.update();
@@ -90,8 +92,8 @@ public class GameplayScreen extends AbstractScreen {
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
 			break;
-		case Keys.A:
-		case Keys.LEFT:
+		case Keys.S:
+		case Keys.SPACE:
 			car.brake(true);
 			break;
 		case Keys.ESCAPE:
@@ -103,7 +105,8 @@ public class GameplayScreen extends AbstractScreen {
 
 	@Override public boolean keyUp(int key) {
 		switch(key){
-		case Keys.LEFT:
+		case Keys.S:
+		case Keys.SPACE:
 			car.brake(false);
 			break;
 		}

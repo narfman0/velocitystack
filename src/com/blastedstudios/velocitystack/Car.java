@@ -58,8 +58,9 @@ public class Car {
 		return body.getWorldCenter();
 	}
 	
-	public void gas(float dt){
-		float torque = Properties.getFloat("car.torque", -9999f)*dt;
+	public void gas(float dt, boolean reverse){
+		float directionModifier = reverse ? -1f : 1f;
+		float torque = Properties.getFloat("car.torque", 9999f) * dt * directionModifier;
 		rWheel.applyTorque(torque, true);
 		fWheel.applyTorque(torque, true);
 	}
