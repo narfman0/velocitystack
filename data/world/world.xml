@@ -1,14 +1,62 @@
 <world.GDXWorld>
   <levels>
     <world.GDXLevel>
-      <name>Level-0</name>
+      <name>Plains</name>
       <coordinates>
         <x>0.0</x>
         <y>0.0</y>
       </coordinates>
       <tiles/>
       <circles/>
-      <polygons/>
+      <polygons>
+        <world.shape.GDXPolygon>
+          <name>Polygon-0</name>
+          <resource>forest1.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>StaticBody</bodyType>
+          <center>
+            <x>21.875</x>
+            <y>1.6499999</y>
+          </center>
+          <repeatable>true</repeatable>
+          <vertices>
+            <Vector2>
+              <x>-27.941668</x>
+              <y>-2.6099992</y>
+            </Vector2>
+            <Vector2>
+              <x>-5.2750015</x>
+              <y>-2.3700001</y>
+            </Vector2>
+            <Vector2>
+              <x>1.7249985</x>
+              <y>-1.4099982</y>
+            </Vector2>
+            <Vector2>
+              <x>9.924999</x>
+              <y>1.4699979</y>
+            </Vector2>
+            <Vector2>
+              <x>14.191666</x>
+              <y>10.749997</y>
+            </Vector2>
+            <Vector2>
+              <x>19.591663</x>
+              <y>10.830001</y>
+            </Vector2>
+            <Vector2>
+              <x>15.791672</x>
+              <y>-9.01</y>
+            </Vector2>
+            <Vector2>
+              <x>-28.008335</x>
+              <y>-7.6499987</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
+      </polygons>
       <npcs/>
       <paths/>
       <joints/>
@@ -19,6 +67,13 @@
       <particles/>
       <sounds/>
       <properties/>
+      <lightAmbient>0</lightAmbient>
     </world.GDXLevel>
   </levels>
+  <worldProperties>
+    <entry>
+      <string>background</string>
+      <string></string>
+    </entry>
+  </worldProperties>
 </world.GDXWorld>
