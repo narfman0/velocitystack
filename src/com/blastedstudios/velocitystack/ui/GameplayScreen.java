@@ -62,7 +62,7 @@ public class GameplayScreen extends AbstractScreen {
 			car.gas(dt, true);
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
 			car.gas(dt, false);
-		world.step(Math.min(1f/20f, dt), 10, 10);
+		world.step(Math.min(1f/20f, dt*2f), 10, 10);
 		camera.position.set(car.getPosition().x, car.getPosition().y, 0);
 		camera.update();
 		gdxRenderer.render(level, camera, createLevelStruct.bodies.entrySet());

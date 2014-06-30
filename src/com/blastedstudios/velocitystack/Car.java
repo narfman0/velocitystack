@@ -2,6 +2,7 @@ package com.blastedstudios.velocitystack;
 
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,24 +35,27 @@ public class Car {
 		fWheel = bodies.get("fWheel");
 		rWheel = bodies.get("rWheel");
 
-		rWheelSprite = new Sprite(renderer.getTexture("tire1.png"));
+		rWheelSprite = new Sprite(renderer.getTexture(group.getShape("rWheel").getResource()));
 		rWheelSprite.setScale(SPRITE_SCALE);
-		fWheelSprite = new Sprite(renderer.getTexture("tire1.png"));
+		fWheelSprite = new Sprite(renderer.getTexture(group.getShape("fWheel").getResource()));
 		fWheelSprite.setScale(SPRITE_SCALE);
-		bodySprite = new Sprite(renderer.getTexture("jeep.png"));
+		bodySprite = new Sprite(renderer.getTexture(group.getShape("body").getResource()));
 		bodySprite.setScale(SPRITE_SCALE);
 	}
 	
 	public void render(float dt, Batch batch){
-		rWheelSprite.setPosition(rWheel.getWorldCenter().x, rWheel.getWorldCenter().y);
-		rWheelSprite.setRotation((float)Math.toDegrees(rWheel.getAngle()));
-		rWheelSprite.draw(batch);
-		fWheelSprite.setPosition(fWheel.getWorldCenter().x, fWheel.getWorldCenter().y);
-		fWheelSprite.setRotation((float)Math.toDegrees(fWheel.getAngle()));
-		fWheelSprite.draw(batch);
-		bodySprite.setPosition(body.getWorldCenter().x, body.getWorldCenter().y);
+		bodySprite.setPosition(body.getWorldCenter().x - bodySprite.getWidth()/2f, 
+				body.getWorldCenter().y - bodySprite.getHeight()/2f);
 		bodySprite.setRotation((float)Math.toDegrees(body.getAngle()));
 		bodySprite.draw(batch);
+		rWheelSprite.setPosition(rWheel.getWorldCenter().x - rWheelSprite.getWidth()/2f, 
+				rWheel.getWorldCenter().y - rWheelSprite.getHeight()/2f);
+		rWheelSprite.setRotation((float)Math.toDegrees(rWheel.getAngle()));
+		rWheelSprite.draw(batch);
+		fWheelSprite.setPosition(fWheel.getWorldCenter().x - fWheelSprite.getWidth()/2f, 
+				fWheel.getWorldCenter().y - fWheelSprite.getHeight()/2f);
+		fWheelSprite.setRotation((float)Math.toDegrees(fWheel.getAngle()));
+		fWheelSprite.draw(batch);
 	}
 	
 	public Vector2 getPosition(){
@@ -60,9 +64,12 @@ public class Car {
 	
 	public void gas(float dt, boolean reverse){
 		float directionModifier = reverse ? -1f : 1f;
-		float torque = Properties.getFloat("car.torque", 9999f) * dt * directionModifier;
-		rWheel.applyTorque(torque, true);
-		fWheel.applyTorque(torque, true);
+		float torque = Properties.getFloat("car.torque", 5000f) * dt * directionModifier;
+		Gdx.app.log("Car.gas", "rWheel vela" + rWheel.getAngularVelocity());
+		if(Math.abs(rWheel.getAngularVelocity()) < 10f)
+			rWheel.applyTorque(torque, true);
+		if(Math.abs(fWheel.getAngularVelocity()) < 10f)
+			fWheel.applyTorque(torque, true);
 	}
 	
 	public void brake(boolean on){
