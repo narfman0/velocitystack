@@ -74,5 +74,6 @@ public class Car {
 	
 	public void brake(boolean on){
 		fWheel.setFixedRotation(on);
+		rWheel.setFixedRotation(on);
 	}
 }
