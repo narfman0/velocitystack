@@ -66,10 +66,11 @@ public class Car {
 	}
 	
 	public void gas(boolean enable, boolean reverse){
+		float reverseMod = reverse ? 1 : -1;
 		fWheelJoint.enableMotor(enable);
-		fWheelJoint.setMotorSpeed(reverse ? -Math.abs(fWheelJoint.getMotorSpeed()) : Math.abs(fWheelJoint.getMotorSpeed()));
+		fWheelJoint.setMotorSpeed(reverseMod * Math.abs(fWheelJoint.getMotorSpeed()));
 		rWheelJoint.enableMotor(enable);
-		rWheelJoint.setMotorSpeed(reverse ? -Math.abs(fWheelJoint.getMotorSpeed()) : Math.abs(fWheelJoint.getMotorSpeed()));
+		rWheelJoint.setMotorSpeed(reverseMod * Math.abs(fWheelJoint.getMotorSpeed()));
 	}
 	
 	public void brake(boolean on){
