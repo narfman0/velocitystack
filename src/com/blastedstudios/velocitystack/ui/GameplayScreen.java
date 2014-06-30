@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -39,13 +40,13 @@ public class GameplayScreen extends AbstractScreen {
 	private final SpriteBatch spriteBatch = new SpriteBatch();
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
-			File selectedFile, GDXWorld gdxWorld) {
+			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle) {
 		super(game, skin);
 		this.level = level;
 		this.gdxRenderer = gdxRenderer;
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
-		car = new Car(world, new Vector2(), Gdx.files.internal("data/world/cars/monster1.json"), gdxRenderer);
+		car = new Car(world, new Vector2(), carFileHandle, gdxRenderer);
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

@@ -3,9 +3,11 @@ package com.blastedstudios.velocitystack.ui;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,6 +17,8 @@ import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 
 class MainWindow extends Window{
+	private FileHandle carFileHandle = null;
+	
 	public MainWindow(final Skin skin, final GDXGame game, 
 			final GDXWorld gdxWorld, final File worldFile, final GDXRenderer gdxRenderer) {
 		super("", skin);
@@ -27,18 +31,36 @@ class MainWindow extends Window{
 		});
 		add(new Label("Velocity Stack", skin));
 		row();
+		add(new Label("Choose car:", skin));
+		row();
+		Table carTable = new Table(), levelTable = new Table();
+		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
+		carFileHandle = cars[0];
+		for(final FileHandle carFile : cars){
+			final TextButton button = new TextButton(carFile.nameWithoutExtension(), skin);
+			button.addListener(new ClickListener() {
+				@Override public void clicked(InputEvent event, float x, float y) {
+					carFileHandle = carFile;
+				}
+			});
+			carTable.add(button);
+		}
+		add(carTable);
+		row();
 		add(new Label("Choose level:", skin));
 		row();
 		for(final GDXLevel level : gdxWorld.getLevels()){
 			final TextButton button = new TextButton(level.getName(), skin);
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
-					game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, worldFile, gdxWorld));
+					game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
+							worldFile, gdxWorld, carFileHandle));
 				}
 			});
-			add(button);
-			row();
+			levelTable.add(button);
 		}
+		add(levelTable);
+		row();
 		add(exitButton);
 		pack();
 		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
