@@ -45,7 +45,7 @@ public class GameplayScreen extends AbstractScreen {
 		this.gdxRenderer = gdxRenderer;
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
-		car = new Car(world, new Vector2(), Gdx.files.internal("data/world/cars/jeep.json"), gdxRenderer);
+		car = new Car(world, new Vector2(), Gdx.files.internal("data/world/cars/monster1.json"), gdxRenderer);
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -59,10 +59,12 @@ public class GameplayScreen extends AbstractScreen {
 	@Override public void render(float dt){
 		super.render(dt);
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
-			car.gas(dt, true);
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
-			car.gas(dt, false);
-		world.step(Math.min(1f/20f, dt*2f), 10, 10);
+			car.gas(true, false);
+		else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+			car.gas(true, true);
+		else
+			car.gas(false, false);
+		world.step(Math.min(1f/20f, dt), 10, 10);
 		camera.position.set(car.getPosition().x, car.getPosition().y, 0);
 		camera.update();
 		gdxRenderer.render(level, camera, createLevelStruct.bodies.entrySet());
@@ -80,10 +82,9 @@ public class GameplayScreen extends AbstractScreen {
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public Vector2 getPlayerPosition(){
-		//TODO add player pos
-		return null;
+		return car.getPosition();
 	}
 
 	@Override public boolean keyDown(int key) {

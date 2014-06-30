@@ -2,13 +2,13 @@ package com.blastedstudios.velocitystack;
 
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.ISerializer;
 import com.blastedstudios.gdxworld.util.PluginUtil;
@@ -19,6 +19,7 @@ public class Car {
 	private static final float SPRITE_SCALE = Properties.getFloat("sprite.scale", .02f);
 	private final Body body, fWheel, rWheel;
 	private final Sprite fWheelSprite, rWheelSprite, bodySprite;
+	private final WheelJoint rWheelJoint, fWheelJoint;
 	
 	public Car(World world, Vector2 position, FileHandle carFile, GDXRenderer renderer){
 		GDXGroupExportStruct group = null;
@@ -34,6 +35,8 @@ public class Car {
 		body = bodies.get("body");
 		fWheel = bodies.get("fWheel");
 		rWheel = bodies.get("rWheel");
+		rWheelJoint = (WheelJoint) rWheel.getJointList().first().joint;
+		fWheelJoint = (WheelJoint) fWheel.getJointList().first().joint;
 
 		rWheelSprite = new Sprite(renderer.getTexture(group.getShape("rWheel").getResource()));
 		rWheelSprite.setScale(SPRITE_SCALE);
@@ -62,14 +65,11 @@ public class Car {
 		return body.getWorldCenter();
 	}
 	
-	public void gas(float dt, boolean reverse){
-		float directionModifier = reverse ? -1f : 1f;
-		float torque = Properties.getFloat("car.torque", 5000f) * dt * directionModifier;
-		Gdx.app.log("Car.gas", "rWheel vela" + rWheel.getAngularVelocity());
-		if(Math.abs(rWheel.getAngularVelocity()) < 10f)
-			rWheel.applyTorque(torque, true);
-		if(Math.abs(fWheel.getAngularVelocity()) < 10f)
-			fWheel.applyTorque(torque, true);
+	public void gas(boolean enable, boolean reverse){
+		fWheelJoint.enableMotor(enable);
+		fWheelJoint.setMotorSpeed(reverse ? -Math.abs(fWheelJoint.getMotorSpeed()) : Math.abs(fWheelJoint.getMotorSpeed()));
+		rWheelJoint.enableMotor(enable);
+		rWheelJoint.setMotorSpeed(reverse ? -Math.abs(fWheelJoint.getMotorSpeed()) : Math.abs(fWheelJoint.getMotorSpeed()));
 	}
 	
 	public void brake(boolean on){
