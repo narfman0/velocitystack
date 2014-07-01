@@ -90,7 +90,11 @@ public class GameplayScreen extends AbstractScreen {
 
 	@Override public boolean keyDown(int key) {
 		switch(key){
+		case Keys.Q:
+			car.setDepth((short)1);
+			break;
 		case Keys.E:
+			car.setDepth((short)2);
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
 			break;
