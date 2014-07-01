@@ -1,6 +1,7 @@
 package com.blastedstudios.velocitystack.ui;
 
 import java.io.File;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +23,7 @@ import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXLevel.CreateLevelReturnStruct;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
+import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.Car;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
@@ -68,7 +71,15 @@ public class GameplayScreen extends AbstractScreen {
 		world.step(Math.min(1f/20f, dt), 10, 10);
 		camera.position.set(car.getPosition().x, car.getPosition().y, 0);
 		camera.update();
-		gdxRenderer.render(level, camera, createLevelStruct.bodies.entrySet());
+		
+		spriteBatch.setProjectionMatrix(camera.combined);
+		spriteBatch.begin();
+		gdxRenderer.render(spriteBatch, level, camera, createLevelStruct.bodies.entrySet());
+		for(Entry<GDXShape,Body> entry : createLevelStruct.bodies.entrySet()){
+			float alpha = (entry.getKey().getFilter().categoryBits & (int)car.getDepth()) == 0 ? .25f : 1f;
+			gdxRenderer.drawShape(camera, entry.getKey(), entry.getValue(), spriteBatch, alpha);
+		}
+		spriteBatch.end();
 		tiledMeshRenderer.render(camera);
 		
 		spriteBatch.setProjectionMatrix(camera.combined);

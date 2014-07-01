@@ -90,4 +90,11 @@ public class Car {
 			for(Fixture fixture : body.getFixtureList())
 				fixture.setFilterData(filter);
 	}
+	
+	public float getDepth(){
+		for(Body body : bodies.values())
+			for(Fixture fixture : body.getFixtureList())
+				return fixture.getFilterData().categoryBits;
+		return 0f;
+	}
 }

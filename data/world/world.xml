@@ -20,6 +20,11 @@
             <x>22.896093</x>
             <y>-9.487015</y>
           </center>
+          <filter>
+            <categoryBits>3</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
@@ -67,6 +72,11 @@
             <x>135.96019</x>
             <y>-25.47297</y>
           </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
@@ -172,6 +182,110 @@
             <Vector2>
               <x>-71.30759</x>
               <y>-72.2846</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
+        <world.shape.GDXPolygon>
+          <name>Polygon-0</name>
+          <resource>crate1.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>DynamicBody</bodyType>
+          <center>
+            <x>10.31827</x>
+            <y>-0.0028498769</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <repeatable>false</repeatable>
+          <vertices>
+            <Vector2>
+              <x>-0.5019989</x>
+              <y>0.5810423</y>
+            </Vector2>
+            <Vector2>
+              <x>-0.46596527</x>
+              <y>-0.5652714</y>
+            </Vector2>
+            <Vector2>
+              <x>0.505805</x>
+              <y>-0.56424975</y>
+            </Vector2>
+            <Vector2>
+              <x>0.4621601</x>
+              <y>0.5484786</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
+        <world.shape.GDXPolygon>
+          <name>Polygon-4</name>
+          <resource>crate1.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>DynamicBody</bodyType>
+          <center>
+            <x>11.446678</x>
+            <y>-0.012806907</y>
+          </center>
+          <filter>
+            <categoryBits>2</categoryBits>
+            <maskBits>2</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <repeatable>false</repeatable>
+          <vertices>
+            <Vector2>
+              <x>-0.6206999</x>
+              <y>0.61869776</y>
+            </Vector2>
+            <Vector2>
+              <x>-0.5806551</x>
+              <y>-0.57464826</y>
+            </Vector2>
+            <Vector2>
+              <x>0.6073513</x>
+              <y>-0.58265716</y>
+            </Vector2>
+            <Vector2>
+              <x>0.5940027</x>
+              <y>0.5386075</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
+        <world.shape.GDXPolygon>
+          <name>Polygon-8</name>
+          <resource>forest1.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>StaticBody</bodyType>
+          <center>
+            <x>8.357382</x>
+            <y>-0.19866231</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <repeatable>true</repeatable>
+          <vertices>
+            <Vector2>
+              <x>1.4215736</x>
+              <y>0.8629012</y>
+            </Vector2>
+            <Vector2>
+              <x>-2.8265557</x>
+              <y>-0.43145058</y>
+            </Vector2>
+            <Vector2>
+              <x>1.4049797</x>
+              <y>-0.43145058</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
