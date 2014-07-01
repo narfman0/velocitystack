@@ -14,11 +14,9 @@ import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.ISerializer;
 import com.blastedstudios.gdxworld.util.PluginUtil;
-import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.group.GDXGroupExportStruct;
 
 public class Car {
-	private static final float SPRITE_SCALE = Properties.getFloat("sprite.scale", .02f);
 	private final Body body, fWheel, rWheel;
 	private final Sprite fWheelSprite, rWheelSprite, bodySprite;
 	private final WheelJoint rWheelJoint, fWheelJoint;
@@ -43,11 +41,11 @@ public class Car {
 		fWheelJoint = (WheelJoint) fWheel.getJointList().first().joint;
 
 		rWheelSprite = new Sprite(renderer.getTexture(group.getShape("rWheel").getResource()));
-		rWheelSprite.setScale(SPRITE_SCALE);
+		rWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
 		fWheelSprite = new Sprite(renderer.getTexture(group.getShape("fWheel").getResource()));
-		fWheelSprite.setScale(SPRITE_SCALE);
+		fWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
 		bodySprite = new Sprite(renderer.getTexture(group.getShape("body").getResource()));
-		bodySprite.setScale(SPRITE_SCALE);
+		bodySprite.setScale(VelocityStack.SPRITE_SCALE);
 	}
 	
 	public void render(float dt, Batch batch){

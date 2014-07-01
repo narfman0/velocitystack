@@ -293,7 +293,21 @@
       <npcs/>
       <paths/>
       <joints/>
-      <quests/>
+      <quests>
+        <world.quest.GDXQuest>
+          <name>Quest-0</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>2.0</x>
+              <y>2.0</y>
+            </position>
+            <amount>100</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+      </quests>
       <backgrounds/>
       <lights/>
       <groups/>

@@ -17,6 +17,7 @@ import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.leveleditor.LevelEditorScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
+import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.util.TiledMeshRenderer;
 import com.blastedstudios.gdxworld.world.GDXLevel;
@@ -25,8 +26,10 @@ import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
 import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.Car;
+import com.blastedstudios.velocitystack.quest.MoneyBagHandler;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
+import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 
 public class GameplayScreen extends AbstractScreen {
 	private final GDXLevel level;
@@ -41,6 +44,9 @@ public class GameplayScreen extends AbstractScreen {
 	private final GDXWorld gdxWorld;
 	private final Car car;
 	private final SpriteBatch spriteBatch = new SpriteBatch();
+	private final GameplayHUD hud;
+	private MoneyBagHandler moneyBagHandler;
+	private long cash;
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
 			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle) {
@@ -49,6 +55,10 @@ public class GameplayScreen extends AbstractScreen {
 		this.gdxRenderer = gdxRenderer;
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
+		this.cash = 0;
+		for(IMoneyBag handler : PluginUtil.getPlugins(IMoneyBag.class))
+			(moneyBagHandler = ((MoneyBagHandler)handler)).setGameplayScreen(this);
+		hud = new GameplayHUD(this);
 		car = new Car(world, new Vector2(), carFileHandle, gdxRenderer);
 		
 		createLevelStruct = level.createLevel(world);
@@ -85,9 +95,13 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		car.render(dt, spriteBatch);
+		if(moneyBagHandler != null)
+			moneyBagHandler.render(dt, getPlayerPosition(), spriteBatch);
+		else
+			Gdx.app.error("GameplayScreen.render", "Messed up money drop, moneyBagHandler null!");
 		spriteBatch.end();
-		
 		renderer.render(world, camera.combined);
+		hud.render(dt);
 		stage.draw();
 	}
 
@@ -128,5 +142,13 @@ public class GameplayScreen extends AbstractScreen {
 			break;
 		}
 		return false;
+	}
+
+	public void receiveMoney(long amount) {
+		cash += amount;
+	}
+
+	public long getCash() {
+		return cash;
 	}
 }
