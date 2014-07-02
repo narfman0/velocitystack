@@ -24,6 +24,7 @@ import com.blastedstudios.velocitystack.ui.GameplayScreen;
 public class MoneyBagHandler implements IMoneyBag {
 	private GameplayScreen screen;
 	private LinkedList<MoneyBag> moneyBags = new LinkedList<>();
+	private float dt;
 	
 	public void setGameplayScreen(GameplayScreen screen){
 		this.screen = screen;
@@ -34,9 +35,11 @@ public class MoneyBagHandler implements IMoneyBag {
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
 			bag.sprite.draw(batch);
+			bag.sprite.setRotation(30f*(float)Math.sin(this.dt*5f));
 			if(ContactListener.REMOVE_USER_DATA.equals(bag.body.getUserData()))
 				iter.remove();
 		}
+		this.dt += dt;
 	}
 
 	@Override public CompletionEnum spawnMoney(Vector2 position, long amount) {
