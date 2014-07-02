@@ -34,6 +34,7 @@ import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
 import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 
 public class GameplayScreen extends AbstractScreen {
+	public static final float SPRITE_DEPTH_ALPHA = Properties.getFloat("sprite.depth.alpha", .25f);
 	private final GDXLevel level;
 	private final World world = new World(new Vector2(0, -10), true);
 	private final OrthographicCamera camera;
@@ -91,7 +92,7 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.begin();
 		gdxRenderer.render(spriteBatch, level, camera, createLevelStruct.bodies.entrySet());
 		for(Entry<GDXShape,Body> entry : createLevelStruct.bodies.entrySet()){
-			float alpha = (entry.getKey().getFilter().categoryBits & (int)car.getDepth()) == 0 ? .25f : 1f;
+			float alpha = (entry.getKey().getFilter().categoryBits & (int)car.getDepth()) == 0 ? SPRITE_DEPTH_ALPHA : 1f;
 			gdxRenderer.drawShape(camera, entry.getKey(), entry.getValue(), spriteBatch, alpha);
 		}
 		spriteBatch.end();
@@ -101,7 +102,7 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.begin();
 		car.render(dt, spriteBatch);
 		if(moneyBagHandler != null)
-			moneyBagHandler.render(dt, spriteBatch);
+			moneyBagHandler.render(dt, spriteBatch, car.getDepth());
 		else
 			Gdx.app.error("GameplayScreen.render", "Messed up money drop, moneyBagHandler null!");
 		spriteBatch.end();

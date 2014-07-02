@@ -93,10 +93,10 @@ public class Car {
 				fixture.setFilterData(filter);
 	}
 	
-	public float getDepth(){
+	public short getDepth(){
 		for(Body body : bodies.values())
 			for(Fixture fixture : body.getFixtureList())
 				return fixture.getFilterData().categoryBits;
-		return 0f;
+		return 0;
 	}
 }

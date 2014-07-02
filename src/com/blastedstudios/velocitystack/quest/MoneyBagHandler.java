@@ -31,9 +31,10 @@ public class MoneyBagHandler implements IMoneyBag {
 		moneyBags.clear();
 	}
 	
-	public void render(float dt, Batch batch){
+	public void render(float dt, Batch batch, short depth){
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
+			bag.sprite.setAlpha(depth == bag.depth ? 1f : GameplayScreen.SPRITE_DEPTH_ALPHA);
 			bag.sprite.draw(batch);
 			bag.sprite.setRotation(30f*(float)Math.sin(this.dt*5f));
 			if(ContactListener.REMOVE_USER_DATA.equals(bag.body.getUserData()))
