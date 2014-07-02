@@ -62,9 +62,13 @@ public class Car {
 		fWheelSprite.setRotation((float)Math.toDegrees(fWheel.getAngle()));
 		fWheelSprite.draw(batch);
 	}
-	
+
 	public Vector2 getPosition(){
 		return body.getWorldCenter();
+	}
+	
+	public Vector2 getVelocity(){
+		return body.getLinearVelocity();
 	}
 	
 	public void gas(boolean enable, boolean reverse){

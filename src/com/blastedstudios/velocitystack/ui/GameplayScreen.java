@@ -82,7 +82,9 @@ public class GameplayScreen extends AbstractScreen {
 		else
 			car.gas(false, false);
 		world.step(Math.min(1f/20f, dt), 10, 10);
-		camera.position.set(car.getPosition().x, car.getPosition().y, 0);
+//		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
+//		Vector2 cameraTarget = car.getPosition().cpy().add(cameraOffset);
+		camera.position.set(car.getPosition(), 0);
 		camera.update();
 		
 		spriteBatch.setProjectionMatrix(camera.combined);
@@ -99,7 +101,7 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.begin();
 		car.render(dt, spriteBatch);
 		if(moneyBagHandler != null)
-			moneyBagHandler.render(dt, getPlayerPosition(), spriteBatch);
+			moneyBagHandler.render(dt, spriteBatch);
 		else
 			Gdx.app.error("GameplayScreen.render", "Messed up money drop, moneyBagHandler null!");
 		spriteBatch.end();
@@ -110,6 +112,11 @@ public class GameplayScreen extends AbstractScreen {
 			if(body != null && body.getUserData() != null && 
 					body.getUserData().equals(ContactListener.REMOVE_USER_DATA))
 				world.destroyBody(body);
+	}
+	
+	public Vector2 calculateCameraVelocityOffset(Vector2 velocity){
+		return new Vector2((float)Math.min(Math.cbrt(velocity.x), Gdx.graphics.getWidth()/2f - 16), 
+				(float)Math.min(Math.cbrt(velocity.y), Gdx.graphics.getHeight()/2f - 16));
 	}
 	
 	public Iterable<Body> getBodiesIterable(){

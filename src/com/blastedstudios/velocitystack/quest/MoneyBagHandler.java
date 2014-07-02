@@ -31,7 +31,7 @@ public class MoneyBagHandler implements IMoneyBag {
 		moneyBags.clear();
 	}
 	
-	public void render(float dt, Vector2 position, Batch batch){
+	public void render(float dt, Batch batch){
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
 			bag.sprite.draw(batch);
