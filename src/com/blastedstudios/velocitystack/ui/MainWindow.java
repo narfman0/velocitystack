@@ -3,6 +3,7 @@ package com.blastedstudios.velocitystack.ui;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,11 +18,14 @@ import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 
 class MainWindow extends Window{
+	private final Label cashLabel;
+	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
 	private FileHandle carFileHandle = null;
+	private long cash;
 	
-	public MainWindow(final Skin skin, final GDXGame game, 
-			final GDXWorld gdxWorld, final File worldFile, final GDXRenderer gdxRenderer) {
-		super("", skin);
+	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
+			final File worldFile, final GDXRenderer gdxRenderer) {
+		super("Velocity Stack", skin);
 		setColor(MainScreen.WINDOW_ALPHA_COLOR);
 		final TextButton exitButton = new TextButton("Exit", skin);
 		exitButton.addListener(new ClickListener() {
@@ -29,7 +33,8 @@ class MainWindow extends Window{
 				Gdx.app.exit();
 			}
 		});
-		add(new Label("Velocity Stack", skin));
+		add(cashLabel = new Label("-----------", skin));
+		updateCashLabel(preferences.getLong("cash", 0));
 		row();
 		add(new Label("Choose car:", skin));
 		row();
@@ -54,7 +59,7 @@ class MainWindow extends Window{
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
 					game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
-							worldFile, gdxWorld, carFileHandle));
+							worldFile, gdxWorld, carFileHandle, MainWindow.this));
 				}
 			});
 			levelTable.add(button);
@@ -66,5 +71,15 @@ class MainWindow extends Window{
 		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
 		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
 		setMovable(false);
+	}
+
+	public void levelComplete(long cashGained) {
+		updateCashLabel(cash += cashGained);
+		preferences.putLong("cash", cash);
+		preferences.flush();
+	}
+
+	private void updateCashLabel(long cash) {
+		cashLabel.setText("Current cash: " + cash + "$");
 	}
 }

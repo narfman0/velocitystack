@@ -11,7 +11,7 @@ public class GameplayHUD {
 	public GameplayHUD(GameplayScreen screen){
 		this.screen = screen;
 		Window cashWindow = new Window("", screen.getSkin());
-		cashWindow.add(cashLabel = new Label("$", screen.getSkin()));
+		cashWindow.add(cashLabel = new Label("---------$", screen.getSkin()));
 		cashWindow.pack();
 		cashWindow.setY(Gdx.graphics.getHeight() - cashWindow.getHeight());
 		screen.getStage().addActor(cashWindow);

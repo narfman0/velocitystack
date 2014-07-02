@@ -32,6 +32,7 @@ import com.blastedstudios.velocitystack.quest.MoneyBagHandler;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
 import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
+import com.blastedstudios.velocitystack.ui.GameplayMenuWindow.IRemovedListener;
 
 public class GameplayScreen extends AbstractScreen {
 	public static final float SPRITE_DEPTH_ALPHA = Properties.getFloat("sprite.depth.alpha", .25f);
@@ -48,22 +49,24 @@ public class GameplayScreen extends AbstractScreen {
 	private final Car car;
 	private final SpriteBatch spriteBatch = new SpriteBatch();
 	private final GameplayHUD hud;
+	private final MainWindow mainWindow;
+	private GameplayMenuWindow gameplayMenu;
 	private MoneyBagHandler moneyBagHandler;
 	private long cash;
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
-			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle) {
+			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle, MainWindow mainWindow) {
 		super(game, skin);
 		this.level = level;
 		this.gdxRenderer = gdxRenderer;
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
+		this.mainWindow = mainWindow;
 		this.cash = 0;
 		world.setContactListener(new ContactListener(this));
-		for(IMoneyBag handler : PluginUtil.getPlugins(IMoneyBag.class))
-			(moneyBagHandler = ((MoneyBagHandler)handler)).setGameplayScreen(this);
 		hud = new GameplayHUD(this);
 		car = new Car(world, new Vector2(), carFileHandle, gdxRenderer);
+		moneyBagHandler = (MoneyBagHandler) PluginUtil.getPlugins(IMoneyBag.class).iterator().next();
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -149,7 +152,14 @@ public class GameplayScreen extends AbstractScreen {
 			car.brake(true);
 			break;
 		case Keys.ESCAPE:
-			game.popScreen();
+			if(gameplayMenu == null){
+				IRemovedListener listener = new IRemovedListener() {
+					@Override public void removed() {
+						gameplayMenu = null;
+					}
+				};
+				stage.addActor(gameplayMenu = new GameplayMenuWindow(this, getSkin(), listener));
+			}
 			break;
 		}
 		return false;
@@ -171,5 +181,11 @@ public class GameplayScreen extends AbstractScreen {
 
 	public long getCash() {
 		return cash;
+	}
+
+	public void exit(boolean early) {
+		long cashGained = early ? cash/2 : cash;
+		mainWindow.levelComplete(cashGained);
+		game.popScreen();
 	}
 }

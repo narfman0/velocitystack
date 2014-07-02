@@ -21,12 +21,12 @@ import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 import com.blastedstudios.velocitystack.ui.GameplayScreen;
 
 @PluginImplementation
-public class MoneyBagHandler implements IMoneyBag {
+public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer {
 	private GameplayScreen screen;
 	private LinkedList<MoneyBag> moneyBags = new LinkedList<>();
 	private float dt;
 	
-	public void setGameplayScreen(GameplayScreen screen){
+	@Override public void setScreen(GameplayScreen screen){
 		this.screen = screen;
 		moneyBags.clear();
 	}
