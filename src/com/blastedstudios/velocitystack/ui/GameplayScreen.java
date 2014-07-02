@@ -28,6 +28,7 @@ import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
 import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.Car;
 import com.blastedstudios.velocitystack.ContactListener;
+import com.blastedstudios.velocitystack.VelocityStack;
 import com.blastedstudios.velocitystack.quest.MoneyBagHandler;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
@@ -70,7 +71,7 @@ public class GameplayScreen extends AbstractScreen {
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.zoom = Properties.getFloat("gameplay.camera.zoom", .02f);
+		camera.zoom = VelocityStack.SPRITE_SCALE;
 		questManager.initialize(new QuestTriggerInformationProvider(this), new QuestManifestationExecutor(this));
 		questManager.setCurrentLevel(level);
 		questManager.tick();//to get "start" quest to set respawn location
@@ -89,6 +90,7 @@ public class GameplayScreen extends AbstractScreen {
 //		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
 //		Vector2 cameraTarget = car.getPosition().cpy().add(cameraOffset);
 		camera.position.set(car.getPosition(), 0);
+		camera.zoom = VelocityStack.SPRITE_SCALE + car.getVelocity().len()/1000f;
 		camera.update();
 		
 		spriteBatch.setProjectionMatrix(camera.combined);
