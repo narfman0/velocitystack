@@ -1,5 +1,6 @@
 package com.blastedstudios.velocitystack.quest.moneybag;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -24,5 +25,9 @@ public class MoneyBagManifestationTable extends ManifestationTable{
 
 	@Override public AbstractQuestManifestation apply() {
 		return new MoneyBagManifestation(positionTable.getVertex(), Long.parseLong(amountField.getText()));
+	}
+	
+	@Override public void touched(Vector2 pos){
+		positionTable.setVertex(pos.x, pos.y);
 	}
 }

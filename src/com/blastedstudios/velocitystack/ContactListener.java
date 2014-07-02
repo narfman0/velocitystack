@@ -24,6 +24,9 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
 			moneyBag.body.setUserData(ContactListener.REMOVE_USER_DATA);
 			contact.setEnabled(false);
 		}
+		if(ContactListener.REMOVE_USER_DATA.equals(a.getUserData()) || 
+				ContactListener.REMOVE_USER_DATA.equals(b.getUserData()))
+			contact.setEnabled(false);
 	}
 
 	@Override public void beginContact(Contact contact) {}
