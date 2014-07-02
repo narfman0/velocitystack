@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.leveleditor.LevelEditorScreen;
@@ -26,6 +27,7 @@ import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
 import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.Car;
+import com.blastedstudios.velocitystack.ContactListener;
 import com.blastedstudios.velocitystack.quest.MoneyBagHandler;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
@@ -56,6 +58,7 @@ public class GameplayScreen extends AbstractScreen {
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
 		this.cash = 0;
+		world.setContactListener(new ContactListener(this));
 		for(IMoneyBag handler : PluginUtil.getPlugins(IMoneyBag.class))
 			(moneyBagHandler = ((MoneyBagHandler)handler)).setGameplayScreen(this);
 		hud = new GameplayHUD(this);
@@ -103,6 +106,16 @@ public class GameplayScreen extends AbstractScreen {
 		renderer.render(world, camera.combined);
 		hud.render(dt);
 		stage.draw();
+		for(Body body : getBodiesIterable())
+			if(body != null && body.getUserData() != null && 
+					body.getUserData().equals(ContactListener.REMOVE_USER_DATA))
+				world.destroyBody(body);
+	}
+	
+	public Iterable<Body> getBodiesIterable(){
+		Array<Body> bodyArray = new Array<>(world.getBodyCount());
+		world.getBodies(bodyArray);
+		return bodyArray;
 	}
 
 	public World getWorld() {

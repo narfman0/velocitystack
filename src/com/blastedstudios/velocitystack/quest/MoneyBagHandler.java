@@ -10,8 +10,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.blastedstudios.gdxworld.physics.PhysicsHelper;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.quest.QuestStatus.CompletionEnum;
+import com.blastedstudios.velocitystack.ContactListener;
 import com.blastedstudios.velocitystack.VelocityStack;
 import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 import com.blastedstudios.velocitystack.ui.GameplayScreen;
@@ -29,11 +33,9 @@ public class MoneyBagHandler implements IMoneyBag {
 	public void render(float dt, Vector2 position, Batch batch){
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
-			if(bag.position.dst2(position) < Properties.getFloat("money.pickup.distance", 2f)){
-				iter.remove();
-				screen.receiveMoney(bag.amount);
-			}
 			bag.sprite.draw(batch);
+			if(ContactListener.REMOVE_USER_DATA.equals(bag.body.getUserData()))
+				iter.remove();
 		}
 	}
 
@@ -46,6 +48,7 @@ public class MoneyBagHandler implements IMoneyBag {
 		public final Vector2 position;
 		public final long amount;
 		public final Sprite sprite;
+		public final Body body;
 		
 		public MoneyBag(Vector2 position, long amount){
 			this.position = position;
@@ -53,6 +56,9 @@ public class MoneyBagHandler implements IMoneyBag {
 			sprite = new Sprite(new Texture(Gdx.files.internal("data/textures/moneyBag.png")));
 			sprite.setPosition(position.x - sprite.getWidth()/2f, position.y - sprite.getHeight()/2f);
 			sprite.setScale(VelocityStack.SPRITE_SCALE);
+			body = PhysicsHelper.createCircle(screen.getWorld(), Properties.getFloat("moneybag.radius", .5f), 
+					position, BodyType.StaticBody, 1f, 1f, 1f, (short)-1, (short)-1, (short)0);
+			body.setUserData(this);
 		}
 	}
 }
