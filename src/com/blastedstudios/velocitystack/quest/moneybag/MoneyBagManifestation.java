@@ -10,22 +10,23 @@ public class MoneyBagManifestation extends AbstractQuestManifestation{
 	public static MoneyBagManifestation DEFAULT = new MoneyBagManifestation();
 	private Vector2 position = new Vector2();
 	private long amount;
+	private short depth = 1;
 	
 	public MoneyBagManifestation(){}
-	public MoneyBagManifestation(Vector2 position, long amount){
+	public MoneyBagManifestation(Vector2 position, long amount, short depth){
 		this.position = position;
 		this.amount = amount;
 	}
 	
 	@Override public CompletionEnum execute() {
 		for(IMoneyBag handler : PluginUtil.getPlugins(IMoneyBag.class))
-			if(handler.spawnMoney(position, amount) == CompletionEnum.COMPLETED)
+			if(handler.spawnMoney(position, amount, depth) == CompletionEnum.COMPLETED)
 				return CompletionEnum.COMPLETED;
 		return CompletionEnum.EXECUTING;
 	}
 
 	@Override public MoneyBagManifestation clone() {
-		return new MoneyBagManifestation(position.cpy(), amount);
+		return new MoneyBagManifestation(position.cpy(), amount, depth);
 	}
 
 	@Override public String toString() {
@@ -46,5 +47,13 @@ public class MoneyBagManifestation extends AbstractQuestManifestation{
 	
 	public void setAmount(long amount) {
 		this.amount = amount;
+	}
+	
+	public short getDepth() {
+		return depth;
+	}
+	
+	public void setDepth(short depth) {
+		this.depth = depth;
 	}
 }

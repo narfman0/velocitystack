@@ -10,21 +10,26 @@ import com.blastedstudios.gdxworld.world.quest.manifestation.AbstractQuestManife
 
 public class MoneyBagManifestationTable extends ManifestationTable{
 	private final VertexTable positionTable;
-	private final TextField amountField;
+	private final TextField amountField, depthField;
 
 	public MoneyBagManifestationTable(Skin skin, MoneyBagManifestation manifestation) {
 		super(skin);
 		positionTable = new VertexTable(manifestation.getPosition(), skin);
 		amountField = new TextField(manifestation.getAmount()+"", skin);
+		depthField = new TextField(manifestation.getDepth()+"", skin);
 		add(new Label("Position: ", skin));
 		add(positionTable);
 		row();
 		add(new Label("Amount: ", skin));
 		add(amountField);
+		row();
+		add(new Label("Depth: ", skin));
+		add(depthField);
 	}
 
 	@Override public AbstractQuestManifestation apply() {
-		return new MoneyBagManifestation(positionTable.getVertex(), Long.parseLong(amountField.getText()));
+		return new MoneyBagManifestation(positionTable.getVertex(), Long.parseLong(amountField.getText()),
+				Short.parseShort(depthField.getText()));
 	}
 	
 	@Override public void touched(Vector2 pos){

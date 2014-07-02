@@ -42,25 +42,27 @@ public class MoneyBagHandler implements IMoneyBag {
 		this.dt += dt;
 	}
 
-	@Override public CompletionEnum spawnMoney(Vector2 position, long amount) {
-		moneyBags.add(new MoneyBag(position, amount));
+	@Override public CompletionEnum spawnMoney(Vector2 position, long amount, short depth) {
+		moneyBags.add(new MoneyBag(position, amount, depth));
 		return CompletionEnum.COMPLETED;
 	}
 	
 	public class MoneyBag{
 		public final Vector2 position;
 		public final long amount;
+		public final short depth;
 		public final Sprite sprite;
 		public final Body body;
 		
-		public MoneyBag(Vector2 position, long amount){
+		public MoneyBag(Vector2 position, long amount, short depth){
 			this.position = position;
 			this.amount = amount;
+			this.depth = depth;
 			sprite = new Sprite(new Texture(Gdx.files.internal("data/textures/moneyBag.png")));
 			sprite.setPosition(position.x - sprite.getWidth()/2f, position.y - sprite.getHeight()/2f);
 			sprite.setScale(VelocityStack.SPRITE_SCALE);
 			body = PhysicsHelper.createCircle(screen.getWorld(), Properties.getFloat("moneybag.radius", .5f), 
-					position, BodyType.StaticBody, 1f, 1f, 1f, (short)-1, (short)-1, (short)0);
+					position, BodyType.StaticBody, 1f, 1f, 1f, depth, depth, (short)0);
 			body.setUserData(this);
 		}
 	}

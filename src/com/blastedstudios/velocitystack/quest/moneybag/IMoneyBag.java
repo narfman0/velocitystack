@@ -8,5 +8,5 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 
 @PluginImplementation
 public interface IMoneyBag extends Plugin{
-	public CompletionEnum spawnMoney(Vector2 position, long amount);
+	public CompletionEnum spawnMoney(Vector2 position, long amount, short depth);
 }
