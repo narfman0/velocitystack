@@ -1,10 +1,10 @@
-package com.blastedstudios.velocitystack;
+package com.blastedstudios.velocitystack.util;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.blastedstudios.velocitystack.quest.MoneyBagHandler.MoneyBag;
+import com.blastedstudios.velocitystack.quest.handlers.MoneyBagHandler.MoneyBag;
 import com.blastedstudios.velocitystack.ui.GameplayScreen;
 
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {

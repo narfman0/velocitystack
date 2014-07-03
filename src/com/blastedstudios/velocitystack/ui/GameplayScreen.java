@@ -26,14 +26,13 @@ import com.blastedstudios.gdxworld.world.GDXLevel.CreateLevelReturnStruct;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
 import com.blastedstudios.gdxworld.world.shape.GDXShape;
-import com.blastedstudios.velocitystack.Car;
-import com.blastedstudios.velocitystack.ContactListener;
 import com.blastedstudios.velocitystack.VelocityStack;
-import com.blastedstudios.velocitystack.quest.MoneyBagHandler;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
-import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 import com.blastedstudios.velocitystack.ui.GameplayMenuWindow.IRemovedListener;
+import com.blastedstudios.velocitystack.util.Car;
+import com.blastedstudios.velocitystack.util.ContactListener;
+import com.blastedstudios.velocitystack.util.IRenderComponent;
 
 public class GameplayScreen extends AbstractScreen {
 	public static final float SPRITE_DEPTH_ALPHA = Properties.getFloat("sprite.depth.alpha", .25f);
@@ -52,7 +51,6 @@ public class GameplayScreen extends AbstractScreen {
 	private final GameplayHUD hud;
 	private final MainWindow mainWindow;
 	private GameplayMenuWindow gameplayMenu;
-	private MoneyBagHandler moneyBagHandler;
 	private long cash;
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
@@ -67,7 +65,6 @@ public class GameplayScreen extends AbstractScreen {
 		world.setContactListener(new ContactListener(this));
 		hud = new GameplayHUD(this);
 		car = new Car(world, new Vector2(), carFileHandle, gdxRenderer);
-		moneyBagHandler = (MoneyBagHandler) PluginUtil.getPlugins(IMoneyBag.class).iterator().next();
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -106,10 +103,8 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		car.render(dt, spriteBatch);
-		if(moneyBagHandler != null)
-			moneyBagHandler.render(dt, spriteBatch, car.getDepth());
-		else
-			Gdx.app.error("GameplayScreen.render", "Messed up money drop, moneyBagHandler null!");
+		for(IRenderComponent component : PluginUtil.getPlugins(IRenderComponent.class))
+			component.render(dt, this, spriteBatch, car);
 		spriteBatch.end();
 		renderer.render(world, camera.combined);
 		hud.render(dt);

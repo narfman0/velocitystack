@@ -1,4 +1,4 @@
-package com.blastedstudios.velocitystack;
+package com.blastedstudios.velocitystack.util;
 
 import java.util.Map;
 
@@ -15,6 +15,7 @@ import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.ISerializer;
 import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.gdxworld.world.group.GDXGroupExportStruct;
+import com.blastedstudios.velocitystack.VelocityStack;
 
 public class Car {
 	private final Body body, fWheel, rWheel;

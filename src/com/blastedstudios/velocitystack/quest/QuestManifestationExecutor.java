@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.gdxworld.world.quest.manifestation.IQuestManifestationExecutor;
 import com.blastedstudios.velocitystack.ui.GameplayScreen;
+import com.blastedstudios.velocitystack.util.IGameplayScreenConsumer;
 
 public class QuestManifestationExecutor implements IQuestManifestationExecutor{
 	private final GameplayScreen screen;

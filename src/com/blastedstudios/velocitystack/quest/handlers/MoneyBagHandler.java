@@ -1,4 +1,4 @@
-package com.blastedstudios.velocitystack.quest;
+package com.blastedstudios.velocitystack.quest.handlers;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,13 +15,16 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.blastedstudios.gdxworld.physics.PhysicsHelper;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.quest.QuestStatus.CompletionEnum;
-import com.blastedstudios.velocitystack.ContactListener;
 import com.blastedstudios.velocitystack.VelocityStack;
 import com.blastedstudios.velocitystack.quest.moneybag.IMoneyBag;
 import com.blastedstudios.velocitystack.ui.GameplayScreen;
+import com.blastedstudios.velocitystack.util.Car;
+import com.blastedstudios.velocitystack.util.ContactListener;
+import com.blastedstudios.velocitystack.util.IGameplayScreenConsumer;
+import com.blastedstudios.velocitystack.util.IRenderComponent;
 
 @PluginImplementation
-public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer {
+public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer, IRenderComponent {
 	private GameplayScreen screen;
 	private LinkedList<MoneyBag> moneyBags = new LinkedList<>();
 	private float dt;
@@ -31,7 +34,8 @@ public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer {
 		moneyBags.clear();
 	}
 	
-	public void render(float dt, Batch batch, short depth){
+	@Override public void render(float dt, GameplayScreen screen, Batch batch, Car car){
+		short depth = car.getDepth();
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
 			bag.sprite.setAlpha(depth == bag.depth ? 1f : GameplayScreen.SPRITE_DEPTH_ALPHA);
