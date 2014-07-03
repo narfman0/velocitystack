@@ -33,8 +33,9 @@ class MainWindow extends Window{
 				Gdx.app.exit();
 			}
 		});
+		cash = preferences.getLong("cash", 0);
 		add(cashLabel = new Label("-----------", skin));
-		updateCashLabel(preferences.getLong("cash", 0));
+		updateCashLabel();
 		row();
 		add(new Label("Choose car:", skin));
 		row();
@@ -74,12 +75,12 @@ class MainWindow extends Window{
 	}
 
 	public void levelComplete(long cashGained) {
-		updateCashLabel(cash += cashGained);
-		preferences.putLong("cash", cash);
+		preferences.putLong("cash", cash += cashGained);
+		updateCashLabel();
 		preferences.flush();
 	}
 
-	private void updateCashLabel(long cash) {
+	private void updateCashLabel() {
 		cashLabel.setText("Current cash: " + cash + "$");
 	}
 }
