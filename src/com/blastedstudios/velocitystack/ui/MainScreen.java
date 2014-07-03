@@ -17,7 +17,7 @@ public class MainScreen extends AbstractScreen {
 	private final GDXRenderer gdxRenderer;
 
 	public MainScreen(final GDXGame game){
-		super(game, Properties.get("screen.skin","data/ui/uiskin.json"));
+		super(game, Properties.get("screen.skin","data/ui/uiskinGame.json"));
 		gdxRenderer = new GDXRenderer(true, false);
 		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer, stage));
 	}
