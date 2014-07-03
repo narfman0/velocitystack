@@ -12,7 +12,7 @@ import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 
 public class MainScreen extends AbstractScreen {
-	private static final File WORLD_FILE = Gdx.files.internal(Properties.get("world.path")).file();
+	private static final File WORLD_FILE = Gdx.files.internal(Properties.get("world.path", "data/world/world.xml")).file();
 	private final GDXWorld gdxWorld = GDXWorld.load(WORLD_FILE);
 	private final GDXRenderer gdxRenderer;
 
