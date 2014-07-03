@@ -19,6 +19,7 @@ import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.leveleditor.LevelEditorScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.PluginUtil;
+import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.util.TiledMeshRenderer;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXLevel.CreateLevelReturnStruct;
@@ -109,7 +110,8 @@ public class GameplayScreen extends AbstractScreen {
 		for(IRenderComponent component : PluginUtil.getPlugins(IRenderComponent.class))
 			component.render(dt, this, spriteBatch, car);
 		spriteBatch.end();
-		renderer.render(world, camera.combined);
+		if(Properties.getBool("debug.draw", false))
+			renderer.render(world, camera.combined);
 		hud.render(dt);
 		stage.draw();
 		for(Body body : getBodiesIterable())
@@ -142,6 +144,10 @@ public class GameplayScreen extends AbstractScreen {
 		case Keys.E:
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
+			break;
+		case Keys.F6:
+			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
+				Properties.set("debug.draw", (!Properties.getBool("debug.draw"))+"");
 			break;
 		case Keys.ESCAPE:
 			showGameplayMenu();

@@ -45,7 +45,8 @@ class MainWindow extends Window{
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
 		carFileHandle = cars[0];
 		for(final FileHandle carFile : cars){
-			final TextButton button = new TextButton(carFile.nameWithoutExtension(), skin);
+			String carPretty = carFile.nameWithoutExtension().replaceAll("_", " ");
+			final TextButton button = new TextButton(carPretty, skin);
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
 					carFileHandle = carFile;
