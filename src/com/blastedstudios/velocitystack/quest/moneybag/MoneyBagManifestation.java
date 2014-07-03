@@ -16,6 +16,7 @@ public class MoneyBagManifestation extends AbstractQuestManifestation{
 	public MoneyBagManifestation(Vector2 position, long amount, short depth){
 		this.position = position;
 		this.amount = amount;
+		this.depth = depth;
 	}
 	
 	@Override public CompletionEnum execute() {
