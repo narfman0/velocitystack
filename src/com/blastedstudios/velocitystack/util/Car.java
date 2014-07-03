@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
@@ -34,7 +32,6 @@ public class Car {
 				}
 			}
 		bodies = group.instantiate(world, position);
-		setDepth((short)1);
 		body = bodies.get("body");
 		fWheel = bodies.get("fWheel");
 		rWheel = bodies.get("rWheel");
@@ -83,21 +80,5 @@ public class Car {
 	public void brake(boolean on){
 		fWheel.setFixedRotation(on);
 		rWheel.setFixedRotation(on);
-	}
-	
-	public void setDepth(short depth){
-		Filter filter = new Filter();
-		filter.categoryBits = depth;
-		filter.maskBits = depth;
-		for(Body body : bodies.values())
-			for(Fixture fixture : body.getFixtureList())
-				fixture.setFilterData(filter);
-	}
-	
-	public short getDepth(){
-		for(Body body : bodies.values())
-			for(Fixture fixture : body.getFixtureList())
-				return fixture.getFilterData().categoryBits;
-		return 0;
 	}
 }

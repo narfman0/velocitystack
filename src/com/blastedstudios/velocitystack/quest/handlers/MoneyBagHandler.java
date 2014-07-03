@@ -35,10 +35,8 @@ public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer, IRen
 	}
 	
 	@Override public void render(float dt, GameplayScreen screen, Batch batch, Car car){
-		short depth = car.getDepth();
 		for(Iterator<MoneyBag> iter = moneyBags.iterator(); iter.hasNext();){
 			MoneyBag bag = iter.next();
-			bag.sprite.setAlpha(depth == bag.depth ? 1f : GameplayScreen.SPRITE_DEPTH_ALPHA);
 			bag.sprite.draw(batch);
 			bag.sprite.setRotation(30f*(float)Math.sin(this.dt*5f));
 			if(ContactListener.REMOVE_USER_DATA.equals(bag.body.getUserData()))
@@ -47,27 +45,25 @@ public class MoneyBagHandler implements IMoneyBag, IGameplayScreenConsumer, IRen
 		this.dt += dt;
 	}
 
-	@Override public CompletionEnum spawnMoney(Vector2 position, long amount, short depth) {
-		moneyBags.add(new MoneyBag(position, amount, depth));
+	@Override public CompletionEnum spawnMoney(Vector2 position, long amount) {
+		moneyBags.add(new MoneyBag(position, amount));
 		return CompletionEnum.COMPLETED;
 	}
 	
 	public class MoneyBag{
 		public final Vector2 position;
 		public final long amount;
-		public final short depth;
 		public final Sprite sprite;
 		public final Body body;
 		
-		public MoneyBag(Vector2 position, long amount, short depth){
+		public MoneyBag(Vector2 position, long amount){
 			this.position = position;
 			this.amount = amount;
-			this.depth = depth;
 			sprite = new Sprite(new Texture(Gdx.files.internal("data/textures/moneyBag.png")));
 			sprite.setPosition(position.x - sprite.getWidth()/2f, position.y - sprite.getHeight()/2f);
 			sprite.setScale(VelocityStack.SPRITE_SCALE);
 			body = PhysicsHelper.createCircle(screen.getWorld(), Properties.getFloat("moneybag.radius", .5f), 
-					position, BodyType.StaticBody, 1f, 1f, 1f, depth, depth, (short)0);
+					position, BodyType.StaticBody, 1f, 1f, 1f, (short)-1, (short)1, (short)0);
 			body.setUserData(this);
 		}
 	}

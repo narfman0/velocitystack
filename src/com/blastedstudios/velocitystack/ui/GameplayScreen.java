@@ -19,7 +19,6 @@ import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.leveleditor.LevelEditorScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.PluginUtil;
-import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.util.TiledMeshRenderer;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXLevel.CreateLevelReturnStruct;
@@ -35,7 +34,6 @@ import com.blastedstudios.velocitystack.util.ContactListener;
 import com.blastedstudios.velocitystack.util.IRenderComponent;
 
 public class GameplayScreen extends AbstractScreen {
-	public static final float SPRITE_DEPTH_ALPHA = Properties.getFloat("sprite.depth.alpha", .25f);
 	private final GDXLevel level;
 	private final World world = new World(new Vector2(0, -10), true);
 	private final OrthographicCamera camera;
@@ -93,10 +91,8 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		gdxRenderer.render(spriteBatch, level, camera, createLevelStruct.bodies.entrySet());
-		for(Entry<GDXShape,Body> entry : createLevelStruct.bodies.entrySet()){
-			float alpha = (entry.getKey().getFilter().categoryBits & (int)car.getDepth()) == 0 ? SPRITE_DEPTH_ALPHA : 1f;
-			gdxRenderer.drawShape(camera, entry.getKey(), entry.getValue(), spriteBatch, alpha);
-		}
+		for(Entry<GDXShape,Body> entry : createLevelStruct.bodies.entrySet())
+			gdxRenderer.drawShape(camera, entry.getKey(), entry.getValue(), spriteBatch);
 		spriteBatch.end();
 		tiledMeshRenderer.render(camera);
 		
@@ -136,11 +132,7 @@ public class GameplayScreen extends AbstractScreen {
 
 	@Override public boolean keyDown(int key) {
 		switch(key){
-		case Keys.Q:
-			car.setDepth((short)1);
-			break;
 		case Keys.E:
-			car.setDepth((short)2);
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
 			break;
