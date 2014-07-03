@@ -305,7 +305,6 @@
               <y>3.8474987</y>
             </position>
             <amount>100</amount>
-            <depth>1</depth>
           </manifestation>
         </world.quest.GDXQuest>
         <world.quest.GDXQuest>
@@ -319,7 +318,6 @@
               <y>5.046878</y>
             </position>
             <amount>100</amount>
-            <depth>1</depth>
           </manifestation>
         </world.quest.GDXQuest>
         <world.quest.GDXQuest>
@@ -333,7 +331,6 @@
               <y>4.0976586</y>
             </position>
             <amount>100</amount>
-            <depth>1</depth>
           </manifestation>
         </world.quest.GDXQuest>
       </quests>

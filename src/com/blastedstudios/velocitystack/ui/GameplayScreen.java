@@ -32,6 +32,7 @@ import com.blastedstudios.velocitystack.ui.GameplayMenuWindow.IRemovedListener;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.ContactListener;
 import com.blastedstudios.velocitystack.util.IRenderComponent;
+import com.blastedstudios.velocitystack.util.IZoomProvider;
 
 public class GameplayScreen extends AbstractScreen {
 	private final GDXLevel level;
@@ -85,7 +86,8 @@ public class GameplayScreen extends AbstractScreen {
 //		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
 //		Vector2 cameraTarget = car.getPosition().cpy().add(cameraOffset);
 		camera.position.set(car.getPosition(), 0);
-		camera.zoom = VelocityStack.SPRITE_SCALE + car.getVelocity().len()/1000f;
+		for(IZoomProvider provider : PluginUtil.getPlugins(IZoomProvider.class))
+			camera.zoom = provider.getZoom(this);
 		camera.update();
 		
 		spriteBatch.setProjectionMatrix(camera.combined);
@@ -176,5 +178,9 @@ public class GameplayScreen extends AbstractScreen {
 		long cashGained = early ? cash/2 : cash;
 		mainWindow.levelComplete(cashGained);
 		game.popScreen();
+	}
+
+	public Car getCar() {
+		return car;
 	}
 }
