@@ -2,14 +2,19 @@ package com.blastedstudios.velocitystack.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.blastedstudios.gdxworld.util.Properties;
 
 public class GameplayHUD {
 	private static final long HUD_UP_TIME = Properties.getLong("money.hud.up.time", 2000),
 			HUD_FADE_TIME = Properties.getLong("money.hud.fade.time", 2000);
+	private final ImageButton gasPedal, brakePedal, reversePedal;
 	private final Label cashLabel;
 	private final GameplayScreen screen;
 	private final Window bankWindow, currentWindow;
@@ -34,6 +39,20 @@ public class GameplayHUD {
 		currentWindow.setWidth(width);
 		bankWindow.setWidth(width);
 		timeLastCash = System.currentTimeMillis();
+
+		gasPedal = createButton("data/textures/pedals/gasPedal.png", "data/textures/pedals/gasPedalOrange.png");
+		brakePedal = createButton("data/textures/pedals/brakePedal.png", "data/textures/pedals/brakePedalOrange.png");
+		reversePedal = createButton("data/textures/pedals/reversePedal.png", "data/textures/pedals/reversePedalOrange.png");
+		gasPedal.setX(Gdx.graphics.getWidth() - gasPedal.getWidth());
+		brakePedal.setX(Gdx.graphics.getWidth()/2f - brakePedal.getWidth()/2f);
+		screen.getStage().addActor(gasPedal);
+		screen.getStage().addActor(brakePedal);
+		screen.getStage().addActor(reversePedal);
+	}
+	
+	private ImageButton createButton(String handleUp, String handleDown){
+		return new ImageButton(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(handleUp)))),
+				new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(handleDown)))));
 	}
 	
 	public void render(float dt){
@@ -55,6 +74,17 @@ public class GameplayHUD {
 		}
 		bankWindow.setColor(newColor);
 		currentWindow.setColor(newColor);
-			
+	}
+	
+	public boolean isGas(){
+		return gasPedal.isPressed();
+	}
+	
+	public boolean isBrake(){
+		return brakePedal.isPressed();
+	}
+	
+	public boolean isReverse(){
+		return reversePedal.isPressed();
 	}
 }

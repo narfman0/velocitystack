@@ -78,12 +78,14 @@ public class GameplayScreen extends AbstractScreen {
 	
 	@Override public void render(float dt){
 		super.render(dt);
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
+		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT) || hud.isGas())
 			car.gas(true, false);
-		else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
+		else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT) || hud.isReverse())
 			car.gas(true, true);
 		else
 			car.gas(false, false);
+		car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || hud.isBrake());
+		
 		world.step(Math.min(1f/20f, dt), 10, 10);
 //		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
 //		Vector2 cameraTarget = car.getPosition().cpy().add(cameraOffset);
@@ -140,10 +142,6 @@ public class GameplayScreen extends AbstractScreen {
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
 			break;
-		case Keys.S:
-		case Keys.SPACE:
-			car.brake(true);
-			break;
 		case Keys.ESCAPE:
 			if(gameplayMenu == null){
 				IRemovedListener listener = new IRemovedListener() {
@@ -153,16 +151,6 @@ public class GameplayScreen extends AbstractScreen {
 				};
 				stage.addActor(gameplayMenu = new GameplayMenuWindow(this, getSkin(), listener));
 			}
-			break;
-		}
-		return false;
-	}
-
-	@Override public boolean keyUp(int key) {
-		switch(key){
-		case Keys.S:
-		case Keys.SPACE:
-			car.brake(false);
 			break;
 		}
 		return false;
