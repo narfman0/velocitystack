@@ -5,22 +5,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.blastedstudios.gdxworld.util.Properties;
 
 public class GameplayHUD {
 	private static final long HUD_UP_TIME = Properties.getLong("money.hud.up.time", 2000),
 			HUD_FADE_TIME = Properties.getLong("money.hud.fade.time", 2000);
-	private final ImageButton gasPedal, brakePedal, reversePedal;
+	private final ImageButton gasPedal, brakePedal, reversePedal, exitButton;
 	private final Label cashLabel;
 	private final GameplayScreen screen;
 	private final Window bankWindow, currentWindow;
 	private long lastCash, timeLastCash;
 	
-	public GameplayHUD(GameplayScreen screen){
+	public GameplayHUD(final GameplayScreen screen){
 		this.screen = screen;
 		bankWindow = new Window("Bank", screen.getSkin());
 		bankWindow.add(new Label(screen.getBank()+"$", screen.getSkin()));
@@ -48,6 +50,16 @@ public class GameplayHUD {
 		screen.getStage().addActor(gasPedal);
 		screen.getStage().addActor(brakePedal);
 		screen.getStage().addActor(reversePedal);
+		
+		exitButton = createButton("data/textures/upArrow.png", "data/textures/upArrowRed.png");
+		exitButton.setX(Gdx.graphics.getWidth() - exitButton.getWidth());
+		exitButton.setY(Gdx.graphics.getHeight() - exitButton.getHeight());
+		exitButton.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				screen.showGameplayMenu();
+			}
+		});
+		screen.getStage().addActor(exitButton);
 	}
 	
 	private ImageButton createButton(String handleUp, String handleDown){

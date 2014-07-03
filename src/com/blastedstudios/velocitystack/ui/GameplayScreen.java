@@ -84,7 +84,8 @@ public class GameplayScreen extends AbstractScreen {
 			car.gas(true, true);
 		else
 			car.gas(false, false);
-		car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || hud.isBrake());
+		car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || 
+				Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake());
 		
 		world.step(Math.min(1f/20f, dt), 10, 10);
 //		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
@@ -143,17 +144,21 @@ public class GameplayScreen extends AbstractScreen {
 				game.pushScreen(new LevelEditorScreen(game, gdxWorld, selectedFile, level));
 			break;
 		case Keys.ESCAPE:
-			if(gameplayMenu == null){
-				IRemovedListener listener = new IRemovedListener() {
-					@Override public void removed() {
-						gameplayMenu = null;
-					}
-				};
-				stage.addActor(gameplayMenu = new GameplayMenuWindow(this, getSkin(), listener));
-			}
+			showGameplayMenu();
 			break;
 		}
 		return false;
+	}
+	
+	public void showGameplayMenu(){
+		if(gameplayMenu == null){
+			IRemovedListener listener = new IRemovedListener() {
+				@Override public void removed() {
+					gameplayMenu = null;
+				}
+			};
+			stage.addActor(gameplayMenu = new GameplayMenuWindow(this, getSkin(), listener));
+		}
 	}
 
 	public void receiveMoney(long amount) {
