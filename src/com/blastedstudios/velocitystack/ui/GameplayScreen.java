@@ -28,9 +28,9 @@ import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.VelocityStack;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
-import com.blastedstudios.velocitystack.ui.GameplayMenuWindow.IRemovedListener;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.ContactListener;
+import com.blastedstudios.velocitystack.util.IRemovedListener;
 import com.blastedstudios.velocitystack.util.IRenderComponent;
 import com.blastedstudios.velocitystack.util.IZoomProvider;
 

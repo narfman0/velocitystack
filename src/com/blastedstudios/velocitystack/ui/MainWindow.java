@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,15 +17,17 @@ import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
+import com.blastedstudios.velocitystack.util.IRemovedListener;
 
 class MainWindow extends Window{
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
+	private Window helpWindow;
 	private FileHandle carFileHandle = null;
 	private long cash;
 	
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
-			final File worldFile, final GDXRenderer gdxRenderer) {
+			final File worldFile, final GDXRenderer gdxRenderer, Stage stage) {
 		super("Velocity Stack", skin);
 		final TextButton exitButton = new TextButton("Exit", skin);
 		exitButton.addListener(new ClickListener() {
@@ -66,11 +69,32 @@ class MainWindow extends Window{
 		}
 		add(levelTable);
 		row();
-		add(exitButton);
+		Table controlsTable = new Table();
+		controlsTable.add(createHelpButton(skin, stage));
+		controlsTable.add(exitButton);
+		add(controlsTable);
 		pack();
 		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
 		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
 		setMovable(false);
+	}
+	
+	private TextButton createHelpButton(final Skin skin, final Stage stage){
+		final IRemovedListener listener = new IRemovedListener() {
+			@Override public void removed() {
+				if(helpWindow != null)
+					helpWindow.remove();
+				helpWindow = null;
+			}
+		};
+		final TextButton controlsButton = new TextButton("Help", skin);
+		controlsButton.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				if(helpWindow == null)
+					stage.addActor(helpWindow = new MainHelp(skin, listener));
+			}
+		});
+		return controlsButton;
 	}
 
 	public void levelComplete(long cashGained) {

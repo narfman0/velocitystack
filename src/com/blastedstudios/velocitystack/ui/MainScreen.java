@@ -19,7 +19,7 @@ public class MainScreen extends AbstractScreen {
 	public MainScreen(final GDXGame game){
 		super(game, Properties.get("screen.skin","data/ui/uiskin.json"));
 		gdxRenderer = new GDXRenderer(true, false);
-		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer));
+		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer, stage));
 	}
 
 	@Override public void render(float delta){
