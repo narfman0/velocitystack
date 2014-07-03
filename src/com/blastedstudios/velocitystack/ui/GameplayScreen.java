@@ -177,7 +177,7 @@ public class GameplayScreen extends AbstractScreen {
 
 	public void exit(boolean early) {
 		long cashGained = early ? cash/2 : cash;
-		mainWindow.levelComplete(cashGained);
+		mainWindow.addCash(cashGained);
 		game.popScreen();
 	}
 
