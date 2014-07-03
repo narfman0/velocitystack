@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameplayMenuWindow extends Window{
 	public GameplayMenuWindow(final GameplayScreen screen, Skin skin, final IRemovedListener listener) {
-		super("Pause", skin);
+		super("Quit", skin);
 		final TextButton okButton = new TextButton("OK", skin);
 		okButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
@@ -25,7 +25,7 @@ public class GameplayMenuWindow extends Window{
 				listener.removed();
 			}
 		});
-		add(new Label("Are you sure you want to quit? You will lose half of what you gained in the level!", skin)).colspan(2);
+		add(new Label("Are you sure you want to quit?\nYou will lose half of what you\ngained in the level!", skin)).colspan(2);
 		row();
 		add(okButton);
 		add(cancelButton);

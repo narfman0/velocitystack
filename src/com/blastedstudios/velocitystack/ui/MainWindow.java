@@ -26,7 +26,6 @@ class MainWindow extends Window{
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
 			final File worldFile, final GDXRenderer gdxRenderer) {
 		super("Velocity Stack", skin);
-		setColor(MainScreen.WINDOW_ALPHA_COLOR);
 		final TextButton exitButton = new TextButton("Exit", skin);
 		exitButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
@@ -60,7 +59,7 @@ class MainWindow extends Window{
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
 					game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
-							worldFile, gdxWorld, carFileHandle, MainWindow.this));
+							worldFile, gdxWorld, carFileHandle, MainWindow.this, cash));
 				}
 			});
 			levelTable.add(button);

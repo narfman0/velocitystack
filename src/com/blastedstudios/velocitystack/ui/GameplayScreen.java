@@ -49,17 +49,19 @@ public class GameplayScreen extends AbstractScreen {
 	private final SpriteBatch spriteBatch = new SpriteBatch();
 	private final GameplayHUD hud;
 	private final MainWindow mainWindow;
+	private final long bank;
 	private GameplayMenuWindow gameplayMenu;
 	private long cash;
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
-			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle, MainWindow mainWindow) {
+			File selectedFile, GDXWorld gdxWorld, FileHandle carFileHandle, MainWindow mainWindow, long bank) {
 		super(game, skin);
 		this.level = level;
 		this.gdxRenderer = gdxRenderer;
 		this.selectedFile = selectedFile;
 		this.gdxWorld = gdxWorld;
 		this.mainWindow = mainWindow;
+		this.bank = bank;
 		this.cash = 0;
 		world.setContactListener(new ContactListener(this));
 		hud = new GameplayHUD(this);
@@ -182,5 +184,9 @@ public class GameplayScreen extends AbstractScreen {
 
 	public Car getCar() {
 		return car;
+	}
+
+	public long getBank() {
+		return bank;
 	}
 }
