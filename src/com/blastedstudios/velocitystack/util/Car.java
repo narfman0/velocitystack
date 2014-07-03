@@ -3,6 +3,7 @@ package com.blastedstudios.velocitystack.util;
 import java.util.Map;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -38,11 +39,11 @@ public class Car {
 		rWheelJoint = (WheelJoint) rWheel.getJointList().first().joint;
 		fWheelJoint = (WheelJoint) fWheel.getJointList().first().joint;
 
-		rWheelSprite = new Sprite(renderer.getTexture(group.getShape("rWheel").getResource()));
+		rWheelSprite = new Sprite(new Texture("data/textures/car/" + group.getShape("rWheel").getResource()));
 		rWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
-		fWheelSprite = new Sprite(renderer.getTexture(group.getShape("fWheel").getResource()));
+		fWheelSprite = new Sprite(new Texture("data/textures/car/" + group.getShape("fWheel").getResource()));
 		fWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
-		bodySprite = new Sprite(renderer.getTexture(group.getShape("body").getResource()));
+		bodySprite = new Sprite(new Texture("data/textures/car/" + group.getShape("body").getResource()));
 		bodySprite.setScale(VelocityStack.SPRITE_SCALE);
 	}
 	
