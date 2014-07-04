@@ -334,7 +334,26 @@
           </manifestation>
         </world.quest.GDXQuest>
       </quests>
-      <backgrounds/>
+      <backgrounds>
+        <world.GDXBackground>
+          <coordinates>
+            <x>0.0</x>
+            <y>0.0</y>
+          </coordinates>
+          <texture>sky.png</texture>
+          <scissor>false</scissor>
+          <scissorPosition>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorPosition>
+          <scissorDimensions>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorDimensions>
+          <depth>100.0</depth>
+          <scale>0.08</scale>
+        </world.GDXBackground>
+      </backgrounds>
       <lights/>
       <groups/>
       <particles/>

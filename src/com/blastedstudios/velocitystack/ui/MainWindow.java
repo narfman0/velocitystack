@@ -8,19 +8,20 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
+import com.blastedstudios.velocitystack.ui.MainCarTable.IBuyListener;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 
 class MainWindow extends Window{
@@ -55,45 +56,33 @@ class MainWindow extends Window{
 		String owned = preferences.getString("cars.owned", "Truck");
 		add(new Label("Choose car:", skin));
 		row();
-		Table levelTable = new Table();
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
-		carFileHandle = cars[0];
-		Table carsTable = new Table();
+		Array<MainCarTable> carTableArray = new Array<>();
+		IBuyListener buyListener = new IBuyListener() {
+			@Override public void buy(String name, int cost) {
+				preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck") + "," + name);
+				addCash(-cost);
+				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage);
+			}
+		};
 		for(final FileHandle carFile : cars){
 			if(!carFile.extension().equals("json"))
 				continue;
 			final String carPretty = carFile.nameWithoutExtension().replaceAll("_", " ");
-			final Button button = GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
-					carFile.pathWithoutExtension()+"_Buy.png");
-			button.addListener(new ClickListener() {
-				@Override public void clicked(InputEvent event, float x, float y) {
-					carFileHandle = carFile;
-				}
-			});
-			Table carTable = new Table();
-			carTable.add(button);
-			if(!owned.contains(carPretty)){
-				carTable.row();
-				button.setTouchable(Touchable.disabled);
-				final TextButton buyButton = new TextButton("Buy", skin);
-				buyButton.addListener(new ClickListener() {
-					@Override public void clicked(InputEvent event, float x, float y) {
-						preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck") + "," + carPretty);
-						addCash(-carCashMap.get(carPretty));
-						rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage);
-					}
-				});
-				if(cash < carCashMap.get(carPretty))
-					buyButton.setTouchable(Touchable.disabled);
-				carTable.add(buyButton);
-			}
-			carsTable.add(carTable);
+			boolean own = owned.contains(carPretty);
+			if(own && carFileHandle == null)
+				carFileHandle = carFile;
+			carTableArray.add(new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
+					own, buyListener, cash));
 		}
-		add(carsTable);
+		List<MainCarTable> carList = new List<>(skin);
+		carList.setItems(carTableArray);
+		add(carList);
 		row();
 		
 		add(new Label("Choose level:", skin));
 		row();
+		Table levelTable = new Table();
 		for(final GDXLevel level : gdxWorld.getLevels()){
 			final TextButton button = new TextButton(level.getName(), skin);
 			button.addListener(new ClickListener() {
