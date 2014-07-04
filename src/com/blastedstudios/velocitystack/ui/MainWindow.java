@@ -9,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -59,8 +60,11 @@ class MainWindow extends Window{
 		carFileHandle = cars[0];
 		Table carsTable = new Table();
 		for(final FileHandle carFile : cars){
+			if(!carFile.extension().equals("json"))
+				continue;
 			final String carPretty = carFile.nameWithoutExtension().replaceAll("_", " ");
-			final TextButton button = new TextButton(carPretty, skin);
+			final Button button = GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
+					carFile.pathWithoutExtension()+"_Buy.png");
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
 					carFileHandle = carFile;

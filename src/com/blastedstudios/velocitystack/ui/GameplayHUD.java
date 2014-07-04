@@ -62,9 +62,9 @@ public class GameplayHUD {
 		screen.getStage().addActor(exitButton);
 	}
 	
-	private ImageButton createButton(String handleUp, String handleDown){
-		return new ImageButton(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(handleUp)))),
-				new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(handleDown)))));
+	public static ImageButton createButton(String handleUp, String handleDown){
+		return new ImageButton(new SpriteDrawable(new Sprite(new Texture(handleUp))),
+				new SpriteDrawable(new Sprite(new Texture(handleDown))));
 	}
 	
 	public void render(float dt){
