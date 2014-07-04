@@ -11,7 +11,7 @@
       <polygons>
         <world.shape.GDXPolygon>
           <name>Polygon-0</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.8</friction>
           <restitution>0.3</restitution>
@@ -63,7 +63,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-3</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -283,7 +283,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-59</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -335,7 +335,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-69</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -419,7 +419,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-92</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -603,7 +603,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-134</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -747,7 +747,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-0</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -895,7 +895,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-28</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -931,7 +931,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-32</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -1003,7 +1003,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-45</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -1039,7 +1039,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-0</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -1135,7 +1135,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-19</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -1243,7 +1243,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-39</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
@@ -1515,7 +1515,7 @@
         </world.shape.GDXPolygon>
         <world.shape.GDXPolygon>
           <name>Polygon-106</name>
-          <resource>dirt1.png</resource>
+          <resource>plainsTiled.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
