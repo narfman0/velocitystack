@@ -333,6 +333,24 @@
             <amount>100</amount>
           </manifestation>
         </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>endLevel</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.aabb.AABBTrigger">
+            <lowerLeft>
+              <x>19.66667</x>
+              <y>-1.1999977</y>
+            </lowerLeft>
+            <upperRight>
+              <x>43.333336</x>
+              <y>34.799995</y>
+            </upperRight>
+          </trigger>
+          <manifestation class="plugin.quest.manifestation.endlevel.EndLevelManifestation">
+            <success>true</success>
+          </manifestation>
+        </world.quest.GDXQuest>
       </quests>
       <backgrounds>
         <world.GDXBackground>

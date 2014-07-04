@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
@@ -51,7 +52,7 @@ public class GameplayScreen extends AbstractScreen {
 	private final GameplayHUD hud;
 	private final MainWindow mainWindow;
 	private final long bank;
-	private GameplayMenuWindow gameplayMenu;
+	private Window gameplayMenu, gameplayEndLevelWindow;
 	private long cash;
 	
 	public GameplayScreen(GDXGame game, Skin skin, GDXLevel level, final GDXRenderer gdxRenderer, 
@@ -79,16 +80,18 @@ public class GameplayScreen extends AbstractScreen {
 	
 	@Override public void render(float dt){
 		super.render(dt);
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT) || hud.isGas())
-			car.gas(true, false);
-		else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT) || hud.isReverse())
-			car.gas(true, true);
-		else
-			car.gas(false, false);
-		car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || 
-				Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake());
-		
+		if(inputEnabled()){
+			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT) || hud.isGas())
+				car.gas(true, false);
+			else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT) || hud.isReverse())
+				car.gas(true, true);
+			else
+				car.gas(false, false);
+			car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || 
+					Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake());
+		}
 		world.step(Math.min(1f/20f, dt), 10, 10);
+		questManager.tick();
 //		Vector2 cameraOffset = calculateCameraVelocityOffset(car.getVelocity());
 //		Vector2 cameraTarget = car.getPosition().cpy().add(cameraOffset);
 		camera.position.set(car.getPosition(), 0);
@@ -150,7 +153,10 @@ public class GameplayScreen extends AbstractScreen {
 				Properties.set("debug.draw", (!Properties.getBool("debug.draw"))+"");
 			break;
 		case Keys.ESCAPE:
-			showGameplayMenu();
+			if(inputEnabled()){
+				car.brake(true);
+				showGameplayMenu();
+			}
 			break;
 		}
 		return false;
@@ -176,9 +182,10 @@ public class GameplayScreen extends AbstractScreen {
 	}
 
 	public void exit(boolean early) {
-		long cashGained = early ? cash/2 : cash;
-		mainWindow.addCash(cashGained);
-		game.popScreen();
+		car.brake(true);
+		long cashEarned = early ? cash/2 : cash;
+		mainWindow.addCash(cashEarned);
+		stage.addActor(gameplayEndLevelWindow = new GameplayEndLevelWindow(skin, this, early, cashEarned));
 	}
 
 	public Car getCar() {
@@ -187,5 +194,9 @@ public class GameplayScreen extends AbstractScreen {
 
 	public long getBank() {
 		return bank;
+	}
+	
+	public boolean inputEnabled(){
+		return gameplayEndLevelWindow == null && gameplayMenu == null;
 	}
 }
