@@ -28,7 +28,6 @@ class MainWindow extends Window{
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
 	private Window helpWindow;
-	private FileHandle carFileHandle = null;
 	private long cash;
 	
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
@@ -36,24 +35,23 @@ class MainWindow extends Window{
 		super("Velocity Stack", skin);
 		cash = preferences.getLong("cash", 0);
 		cashLabel = new Label("-----------", skin);
-		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage);
-		pack();
-		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
-		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
+		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, "Truck");
+		repack();
 		setMovable(false);
 	}
 	
 	private void rebuildUI(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
-			final File worldFile, final GDXRenderer gdxRenderer, final Stage stage){
+			final File worldFile, final GDXRenderer gdxRenderer, final Stage stage, final String activeCar){
 		clear();
 		add(cashLabel);
 		updateCashLabel();
 		row();
+		Table levelTable = new Table();
 		
 		final HashMap<String, Integer> carCashMap = new HashMap<>();
 		for(String carCash : Properties.get("car.cash.map", "Truck,100;Dune Buggy,7500;Monster,15000").split(";"))
 			carCashMap.put(carCash.split(",")[0], Integer.parseInt(carCash.split(",")[1]));
-		String owned = preferences.getString("cars.owned", "Truck");
+		final String owned = preferences.getString("cars.owned", "Truck");
 		add(new Label("Choose car:", skin));
 		row();
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
@@ -62,33 +60,46 @@ class MainWindow extends Window{
 			@Override public void buy(String name, int cost) {
 				preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck") + "," + name);
 				addCash(-cost);
-				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage);
+				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
 			}
 		};
+		int selectedIndex = 0, i=0;
 		for(final FileHandle carFile : cars){
 			if(!carFile.extension().equals("json"))
 				continue;
 			final String carPretty = carFile.nameWithoutExtension().replaceAll("_", " ");
-			boolean own = owned.contains(carPretty);
-			if(own && carFileHandle == null)
-				carFileHandle = carFile;
+			if(carPretty.equals(activeCar))
+				selectedIndex = i;
+			else i++;
 			carTableArray.add(new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
-					own, buyListener, cash));
+					owned.contains(carPretty), buyListener, cash));
 		}
-		List<MainCarTable> carList = new List<>(skin);
+		final List<MainCarTable> carList = new List<>(skin);
 		carList.setItems(carTableArray);
+		final Table carTable = new Table();
+		carList.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				carTable.clear();
+				carTable.add(carList.getSelected());
+				repack();
+			}
+		});
 		add(carList);
+		carList.setSelectedIndex(selectedIndex);
+		carTable.add(carList.getSelected());
+		row();
+		add(carTable);
 		row();
 		
 		add(new Label("Choose level:", skin));
 		row();
-		Table levelTable = new Table();
 		for(final GDXLevel level : gdxWorld.getLevels()){
 			final TextButton button = new TextButton(level.getName(), skin);
 			button.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
-					game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
-							worldFile, gdxWorld, carFileHandle, MainWindow.this, cash));
+					if(owned.contains(carList.getSelected().name))
+						game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
+								worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this, cash));
 				}
 			});
 			levelTable.add(button);
@@ -106,6 +117,12 @@ class MainWindow extends Window{
 		controlsTable.add(createHelpButton(skin, stage));
 		controlsTable.add(exitButton);
 		add(controlsTable);
+	}
+	
+	private void repack(){
+		pack();
+		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
+		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
 	}
 	
 	private TextButton createHelpButton(final Skin skin, final Stage stage){
