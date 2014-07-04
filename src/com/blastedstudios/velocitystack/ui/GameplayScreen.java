@@ -52,6 +52,7 @@ public class GameplayScreen extends AbstractScreen {
 	private final GameplayHUD hud;
 	private final MainWindow mainWindow;
 	private final long bank;
+	private final Vector2 startLocation = new Vector2();
 	private Window gameplayMenu, gameplayEndLevelWindow;
 	private long cash;
 	
@@ -67,7 +68,6 @@ public class GameplayScreen extends AbstractScreen {
 		this.cash = 0;
 		world.setContactListener(new ContactListener(this));
 		hud = new GameplayHUD(this);
-		car = new Car(world, new Vector2(), carFileHandle, gdxRenderer);
 		
 		createLevelStruct = level.createLevel(world);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -76,6 +76,9 @@ public class GameplayScreen extends AbstractScreen {
 		questManager.setCurrentLevel(level);
 		questManager.tick();//to get "start" quest to set respawn location
 		tiledMeshRenderer = new TiledMeshRenderer(gdxRenderer, level.getPolygons());
+
+		//delay car initialization until after quest has set starting location
+		car = new Car(world, startLocation, carFileHandle, gdxRenderer);
 	}
 	
 	@Override public void render(float dt){
@@ -139,6 +142,9 @@ public class GameplayScreen extends AbstractScreen {
 	}
 
 	public Vector2 getPlayerPosition(){
+		//workaround for before car spawns, return where it will spawn (and if that's not right it doesnt matter)
+		if(car == null)
+			return startLocation;
 		return car.getPosition();
 	}
 
@@ -198,5 +204,9 @@ public class GameplayScreen extends AbstractScreen {
 	
 	public boolean inputEnabled(){
 		return gameplayEndLevelWindow == null && gameplayMenu == null;
+	}
+
+	public Vector2 getStartLocation() {
+		return startLocation;
 	}
 }
