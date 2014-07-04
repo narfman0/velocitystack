@@ -289,8 +289,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>185.1065</x>
-            <y>-19.371418</y>
+            <x>185.10571</x>
+            <y>-19.393156</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -300,36 +300,36 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-4.87265</x>
-              <y>-0.7683716</y>
+              <x>-4.8718567</x>
+              <y>-0.7466335</y>
             </Vector2>
             <Vector2>
-              <x>-2.388855</x>
-              <y>-0.65592575</y>
+              <x>-2.3880615</x>
+              <y>-0.6341877</y>
             </Vector2>
             <Vector2>
-              <x>-0.8226471</x>
-              <y>-0.4872589</y>
+              <x>-0.82185364</x>
+              <y>-0.46552086</y>
             </Vector2>
             <Vector2>
-              <x>0.5695343</x>
-              <y>-0.074962616</y>
+              <x>0.57032776</x>
+              <y>-0.053224564</y>
             </Vector2>
             <Vector2>
-              <x>1.265625</x>
-              <y>0.3935547</y>
+              <x>1.2664185</x>
+              <y>0.41529274</y>
             </Vector2>
             <Vector2>
-              <x>1.9300842</x>
-              <y>0.99325943</y>
+              <x>1.9308777</x>
+              <y>1.0149975</y>
             </Vector2>
             <Vector2>
-              <x>2.119934</x>
-              <y>1.3680744</y>
+              <x>2.1207275</x>
+              <y>1.3898125</y>
             </Vector2>
             <Vector2>
-              <x>2.1990356</x>
-              <y>-0.7683716</y>
+              <x>2.1934357</x>
+              <y>-0.92053795</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -715,7 +715,7 @@
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
-          <bodyType>DynamicBody</bodyType>
+          <bodyType>StaticBody</bodyType>
           <center>
             <x>269.61945</x>
             <y>-32.730988</y>
@@ -1211,7 +1211,7 @@
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
-          <bodyType>DynamicBody</bodyType>
+          <bodyType>StaticBody</bodyType>
           <center>
             <x>479.37738</x>
             <y>-32.024536</y>
@@ -1233,11 +1233,11 @@
             </Vector2>
             <Vector2>
               <x>2.110443</x>
-              <y>-0.13593864</y>
+              <y>-0.13594055</y>
             </Vector2>
             <Vector2>
               <x>-2.118805</x>
-              <y>-0.11580086</y>
+              <y>-0.11579895</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -1998,7 +1998,16 @@
           <name>platform1</name>
           <prerequisites></prerequisites>
           <repeatable>false</repeatable>
-          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <trigger class="plugin.quest.trigger.aabb.AABBTrigger">
+            <lowerLeft>
+              <x>267.892</x>
+              <y>-32.797783</y>
+            </lowerLeft>
+            <upperRight>
+              <x>271.451</x>
+              <y>-27.881283</y>
+            </upperRight>
+          </trigger>
           <manifestation class="plugin.quest.manifestation.platform.PlatformManifestation">
             <name>platform1</name>
             <joint>platform1Joint</joint>
@@ -2185,7 +2194,16 @@
           <name>platform2</name>
           <prerequisites></prerequisites>
           <repeatable>false</repeatable>
-          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <trigger class="plugin.quest.trigger.aabb.AABBTrigger">
+            <lowerLeft>
+              <x>478.23434</x>
+              <y>-32.159264</y>
+            </lowerLeft>
+            <upperRight>
+              <x>481.1219</x>
+              <y>-27.592615</y>
+            </upperRight>
+          </trigger>
           <manifestation class="plugin.quest.manifestation.platform.PlatformManifestation">
             <name>platform2</name>
             <joint>platform2Joint</joint>
