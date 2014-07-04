@@ -2530,119 +2530,157 @@
       <lightAmbient>0</lightAmbient>
     </world.GDXLevel>
     <world.GDXLevel>
-      <name>Vertical</name>
+      <name>Desert</name>
       <coordinates>
-        <x>0.1999979</x>
-        <y>-2.7999995</y>
+        <x>4.0666685</x>
+        <y>0.15999793</y>
       </coordinates>
       <tiles/>
-      <circles/>
+      <circles>
+        <world.shape.GDXCircle>
+          <name>circle1</name>
+          <resource>circle10.png</resource>
+          <density>1.0</density>
+          <friction>0.7</friction>
+          <restitution>0.3</restitution>
+          <bodyType>DynamicBody</bodyType>
+          <center>
+            <x>21.375086</x>
+            <y>-7.3949566</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <radius>10.0</radius>
+        </world.shape.GDXCircle>
+        <world.shape.GDXCircle>
+          <name>circle2</name>
+          <resource>circle10.png</resource>
+          <density>1.0</density>
+          <friction>0.7</friction>
+          <restitution>0.3</restitution>
+          <bodyType>DynamicBody</bodyType>
+          <center>
+            <x>42.13334</x>
+            <y>-7.4399986</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <radius>10.0</radius>
+        </world.shape.GDXCircle>
+      </circles>
       <polygons>
         <world.shape.GDXPolygon>
           <name>Polygon-0</name>
-          <resource>forest1.png</resource>
+          <resource>sand1.png</resource>
           <density>1.0</density>
           <friction>0.5</friction>
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>29.328129</x>
-            <y>-51.848583</y>
+            <x>-1.1459014</x>
+            <y>-7.8118076</y>
           </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-30.9135</x>
-              <y>50.69039</y>
+              <x>-22.854097</x>
+              <y>6.611809</y>
             </Vector2>
             <Vector2>
-              <x>-29.553127</x>
-              <y>50.66733</y>
+              <x>62.114548</x>
+              <y>6.2416277</y>
             </Vector2>
             <Vector2>
-              <x>-28.709377</x>
-              <y>50.329834</y>
+              <x>64.03517</x>
+              <y>-49.968857</y>
             </Vector2>
             <Vector2>
-              <x>-27.668753</x>
-              <y>49.418583</y>
+              <x>-39.387432</x>
+              <y>-35.468185</y>
             </Vector2>
             <Vector2>
-              <x>-27.106253</x>
-              <y>48.33858</y>
+              <x>-40.320766</x>
+              <y>41.731804</y>
             </Vector2>
             <Vector2>
-              <x>-17.47814</x>
-              <y>-1.7754364</y>
-            </Vector2>
-            <Vector2>
-              <x>-14.522346</x>
-              <y>-11.533096</y>
-            </Vector2>
-            <Vector2>
-              <x>-10.499033</x>
-              <y>-13.303356</y>
-            </Vector2>
-            <Vector2>
-              <x>-3.2570724</x>
-              <y>-16.682934</y>
-            </Vector2>
-            <Vector2>
-              <x>1.5709057</x>
-              <y>-17.487598</y>
-            </Vector2>
-            <Vector2>
-              <x>6.130665</x>
-              <y>-18.292263</y>
-            </Vector2>
-            <Vector2>
-              <x>11.495083</x>
-              <y>-19.257862</y>
-            </Vector2>
-            <Vector2>
-              <x>16.188946</x>
-              <y>-19.579716</y>
-            </Vector2>
-            <Vector2>
-              <x>19.273487</x>
-              <y>-19.418789</y>
-            </Vector2>
-            <Vector2>
-              <x>22.089802</x>
-              <y>-18.775059</y>
-            </Vector2>
-            <Vector2>
-              <x>23.96735</x>
-              <y>-16.522007</y>
-            </Vector2>
-            <Vector2>
-              <x>25.442562</x>
-              <y>-12.015892</y>
-            </Vector2>
-            <Vector2>
-              <x>26.381336</x>
-              <y>-7.026985</y>
-            </Vector2>
-            <Vector2>
-              <x>27.722454</x>
-              <y>0.21498108</y>
-            </Vector2>
-            <Vector2>
-              <x>42.34048</x>
-              <y>-30.844997</y>
-            </Vector2>
-            <Vector2>
-              <x>-32.895473</x>
-              <y>-27.143543</y>
+              <x>-23.587433</x>
+              <y>30.851805</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
       </polygons>
       <npcs/>
       <paths/>
-      <joints/>
+      <joints>
+        <world.joint.RevoluteJoint>
+          <name>circle1Joint</name>
+          <bodyA>circle1</bodyA>
+          <bodyB>Polygon-0</bodyB>
+          <jointType>RevoluteJoint</jointType>
+          <collideConnected>false</collideConnected>
+          <enableLimit>false</enableLimit>
+          <enableMotor>true</enableMotor>
+          <lowerAngle>0.0</lowerAngle>
+          <upperAngle>0.0</upperAngle>
+          <maxMotorTorque>99999.0</maxMotorTorque>
+          <motorSpeed>1.0</motorSpeed>
+          <referenceAngle>0.0</referenceAngle>
+          <anchor>
+            <x>21.383791</x>
+            <y>-7.419144</y>
+          </anchor>
+        </world.joint.RevoluteJoint>
+        <world.joint.RevoluteJoint>
+          <name>circle2Joint</name>
+          <bodyA>circle2</bodyA>
+          <bodyB>Polygon-0</bodyB>
+          <jointType>RevoluteJoint</jointType>
+          <collideConnected>false</collideConnected>
+          <enableLimit>false</enableLimit>
+          <enableMotor>true</enableMotor>
+          <lowerAngle>0.0</lowerAngle>
+          <upperAngle>0.0</upperAngle>
+          <maxMotorTorque>9999.0</maxMotorTorque>
+          <motorSpeed>1.0</motorSpeed>
+          <referenceAngle>0.0</referenceAngle>
+          <anchor>
+            <x>42.200012</x>
+            <y>-7.6000013</y>
+          </anchor>
+        </world.joint.RevoluteJoint>
+      </joints>
       <quests/>
-      <backgrounds/>
+      <backgrounds>
+        <world.GDXBackground>
+          <coordinates>
+            <x>0.0</x>
+            <y>-10.0</y>
+          </coordinates>
+          <texture>sky.png</texture>
+          <scissor>false</scissor>
+          <scissorPosition>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorPosition>
+          <scissorDimensions>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorDimensions>
+          <depth>100.0</depth>
+          <scale>0.08</scale>
+        </world.GDXBackground>
+      </backgrounds>
       <lights/>
       <groups/>
       <particles/>
