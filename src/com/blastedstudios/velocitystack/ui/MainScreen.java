@@ -9,21 +9,25 @@ import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.worldeditor.WorldEditorScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.Properties;
+import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 
 public class MainScreen extends AbstractScreen {
 	private static final File WORLD_FILE = Gdx.files.internal(Properties.get("world.path", "data/world/world.xml")).file();
 	private final GDXWorld gdxWorld = GDXWorld.load(WORLD_FILE);
 	private final GDXRenderer gdxRenderer;
+	private final ScreenLevelPanner panner;
 
 	public MainScreen(final GDXGame game){
 		super(game, Properties.get("screen.skin","data/ui/uiskinGame.json"));
 		gdxRenderer = new GDXRenderer(true, true);
 		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer, stage));
+		panner = new ScreenLevelPanner(gdxWorld, gdxRenderer);
 	}
 
 	@Override public void render(float delta){
 		super.render(delta);
+		panner.render();
 		stage.draw();
 	}
 
