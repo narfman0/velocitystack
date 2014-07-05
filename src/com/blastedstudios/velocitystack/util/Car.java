@@ -2,27 +2,31 @@ package com.blastedstudios.velocitystack.util;
 
 import java.util.Map;
 
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.ISerializer;
 import com.blastedstudios.gdxworld.util.PluginUtil;
+import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.group.GDXGroupExportStruct;
 import com.blastedstudios.velocitystack.VelocityStack;
 
 public class Car {
+	public static String[] UPGRADES = Properties.get("car.upgrades", "Torque,Speed,Traction").split(",");
 	private final Body body, fWheel, rWheel;
 	private final Sprite fWheelSprite, rWheelSprite, bodySprite;
 	private final WheelJoint rWheelJoint, fWheelJoint;
 	private final Map<String, Body> bodies;
 	
-	public Car(World world, Vector2 position, FileHandle carFile, GDXRenderer renderer){
+	public Car(World world, Vector2 position, FileHandle carFile, GDXRenderer renderer, Preferences preferences){
 		GDXGroupExportStruct group = null;
 		for(ISerializer serializer : PluginUtil.getPlugins(ISerializer.class))
 			if(serializer.getFileFilter().accept(carFile.file())){
@@ -38,6 +42,8 @@ public class Car {
 		rWheel = bodies.get("rWheel");
 		rWheelJoint = (WheelJoint) rWheel.getJointList().first().joint;
 		fWheelJoint = (WheelJoint) fWheel.getJointList().first().joint;
+		
+		applyUpgrades(preferences, carHandleToName(carFile));
 
 		rWheelSprite = new Sprite(new Texture("data/textures/car/" + group.getShape("rWheel").getResource()));
 		rWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
@@ -45,6 +51,24 @@ public class Car {
 		fWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
 		bodySprite = new Sprite(new Texture("data/textures/car/" + group.getShape("body").getResource()));
 		bodySprite.setScale(VelocityStack.SPRITE_SCALE);
+	}
+	
+	private void applyUpgrades(Preferences preferences, String prettyName){
+		for(String upgrade : UPGRADES){
+			float modifier = 1f+(preferences.getFloat(prettyName + "." + upgrade)/100f);
+			if(upgrade.equals("Torque")){
+				fWheelJoint.setMaxMotorTorque(fWheelJoint.getMaxMotorTorque() * modifier);
+				rWheelJoint.setMaxMotorTorque(rWheelJoint.getMaxMotorTorque() * modifier);
+			}
+			if(upgrade.equals("Speed")){
+				fWheelJoint.setMotorSpeed(fWheelJoint.getMotorSpeed() * modifier);
+				rWheelJoint.setMotorSpeed(rWheelJoint.getMotorSpeed() * modifier);
+			}
+			if(upgrade.equals("Traction"))
+				for(Body body : new Body[]{fWheel,rWheel})
+					for(Fixture fixture : body.getFixtureList())
+						fixture.setFriction(fixture.getFriction() * modifier);
+		}
 	}
 	
 	public void render(float dt, Batch batch){
@@ -81,5 +105,9 @@ public class Car {
 	public void brake(boolean on){
 		fWheel.setFixedRotation(on);
 		rWheel.setFixedRotation(on);
+	}
+	
+	public static String carHandleToName(FileHandle handle){
+		return handle.nameWithoutExtension().replaceAll("_", " ");
 	}
 }

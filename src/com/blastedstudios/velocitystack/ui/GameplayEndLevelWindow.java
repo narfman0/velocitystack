@@ -35,5 +35,4 @@ public class GameplayEndLevelWindow extends Window {
 		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
 		setMovable(false);
 	}
-
 }

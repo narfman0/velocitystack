@@ -79,10 +79,7 @@ public class GameplayHUD {
 			newColor.a = 1f;
 		else{
 			long timePastHUDUp = System.currentTimeMillis() - timeLastCash - HUD_UP_TIME;
-			if(timePastHUDUp > HUD_FADE_TIME)
-				newColor.a = 0f;
-			else
-				newColor.a = MathUtils.lerp(1f, 0f, ((float)timePastHUDUp)/((float)HUD_FADE_TIME));
+			newColor.a = timePastHUDUp > HUD_FADE_TIME ? 0f : MathUtils.lerp(1f, 0f, ((float)timePastHUDUp)/((float)HUD_FADE_TIME));
 		}
 		bankWindow.setColor(newColor);
 		currentWindow.setColor(newColor);

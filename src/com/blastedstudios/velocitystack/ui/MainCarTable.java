@@ -13,14 +13,14 @@ public class MainCarTable extends Table{
 	public final FileHandle handle;
 	
 	public MainCarTable(final Skin skin, final String name, final int cost, 
-			final FileHandle carFile, boolean owned, final IBuyListener buyListener,
+			final FileHandle carFile, boolean owned, final ICarTableListener buyListener,
 			final long cash){
 		this.name = name;
 		this.handle = carFile;
 		add(GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
 				carFile.pathWithoutExtension()+"_Buy.png"));
+		row();
 		if(!owned){
-			row();
 			final TextButton buyButton = new TextButton("Buy for " + cost + "$", skin);
 			buyButton.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
@@ -30,6 +30,14 @@ public class MainCarTable extends Table{
 			if(cash < cost)
 				buyButton.setTouchable(Touchable.disabled);
 			add(buyButton);
+		}else{
+			final TextButton upgradeButton = new TextButton("Upgrade", skin);
+			upgradeButton.addListener(new ClickListener() {
+				@Override public void clicked(InputEvent event, float x, float y) {
+					buyListener.upgrade(name);
+				}
+			});
+			add(upgradeButton);
 		}
 	}
 	
@@ -37,7 +45,8 @@ public class MainCarTable extends Table{
 		return name;
 	}
 	
-	public interface IBuyListener{
+	public interface ICarTableListener{
 		void buy(String name, int cost);
+		void upgrade(String name);
 	}
 }

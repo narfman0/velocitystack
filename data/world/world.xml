@@ -1773,6 +1773,38 @@
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
+        <world.shape.GDXPolygon>
+          <name>Polygon-0</name>
+          <resource>plainsTiled.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>StaticBody</bodyType>
+          <center>
+            <x>476.09857</x>
+            <y>-32.14099</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <repeatable>true</repeatable>
+          <vertices>
+            <Vector2>
+              <x>0.96920776</x>
+              <y>0.21146393</y>
+            </Vector2>
+            <Vector2>
+              <x>0.96920776</x>
+              <y>-0.12385559</y>
+            </Vector2>
+            <Vector2>
+              <x>-1.9384155</x>
+              <y>-0.08760452</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
       </polygons>
       <npcs/>
       <paths/>

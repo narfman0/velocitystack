@@ -21,19 +21,19 @@ import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
-import com.blastedstudios.velocitystack.ui.MainCarTable.IBuyListener;
+import com.blastedstudios.velocitystack.ui.MainCarTable.ICarTableListener;
+import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 
 class MainWindow extends Window{
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
 	private Window helpWindow;
-	private long cash;
 	
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
 			final File worldFile, final GDXRenderer gdxRenderer, Stage stage) {
 		super("Velocity Stack", skin);
-		cash = preferences.getLong("cash", 0);
+		preferences.getLong("cash", 0);//set default if not existing
 		cashLabel = new Label("-----------", skin);
 		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, "Truck");
 		repack();
@@ -56,23 +56,31 @@ class MainWindow extends Window{
 		row();
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
 		Array<MainCarTable> carTableArray = new Array<>();
-		IBuyListener buyListener = new IBuyListener() {
+		ICarTableListener buyListener = new ICarTableListener() {
 			@Override public void buy(String name, int cost) {
 				preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck") + "," + name);
 				addCash(-cost);
 				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
+			}
+			@Override public void upgrade(final String name) {
+				IRemovedListener listener = new IRemovedListener() {
+					@Override public void removed() {
+						rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
+					}
+				};
+				game.pushScreen(new UpgradeScreen(game, skin, name, preferences, listener));
 			}
 		};
 		int selectedIndex = 0, i=0;
 		for(final FileHandle carFile : cars){
 			if(!carFile.extension().equals("json"))
 				continue;
-			final String carPretty = carFile.nameWithoutExtension().replaceAll("_", " ");
+			final String carPretty = Car.carHandleToName(carFile);
 			if(carPretty.equals(activeCar))
 				selectedIndex = i;
 			else i++;
 			carTableArray.add(new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
-					owned.contains(carPretty), buyListener, cash));
+					owned.contains(carPretty), buyListener, preferences.getLong("cash")));
 		}
 		final List<MainCarTable> carList = new List<>(skin);
 		carList.setItems(carTableArray);
@@ -99,7 +107,8 @@ class MainWindow extends Window{
 				@Override public void clicked(InputEvent event, float x, float y) {
 					if(owned.contains(carList.getSelected().name))
 						game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
-								worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this, cash));
+								worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this,
+								preferences.getLong("cash"), preferences));
 				}
 			});
 			levelTable.add(button);
@@ -144,12 +153,12 @@ class MainWindow extends Window{
 	}
 
 	public void addCash(long cashGained) {
-		preferences.putLong("cash", cash += cashGained);
-		updateCashLabel();
+		preferences.putLong("cash", preferences.getLong("cash") + cashGained);
 		preferences.flush();
+		updateCashLabel();
 	}
 
 	private void updateCashLabel() {
-		cashLabel.setText("Current cash: " + cash + "$");
+		cashLabel.setText("Current cash: " + preferences.getLong("cash") + "$");
 	}
 }
