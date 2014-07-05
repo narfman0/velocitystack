@@ -1,7 +1,6 @@
 package com.blastedstudios.velocitystack.ui;
 
 import java.io.File;
-import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -27,7 +26,6 @@ import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXLevel.CreateLevelReturnStruct;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.gdxworld.world.quest.GDXQuestManager;
-import com.blastedstudios.gdxworld.world.shape.GDXShape;
 import com.blastedstudios.velocitystack.VelocityStack;
 import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
@@ -105,8 +103,6 @@ public class GameplayScreen extends AbstractScreen {
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		gdxRenderer.render(spriteBatch, level, camera, createLevelStruct.bodies.entrySet());
-		for(Entry<GDXShape,Body> entry : createLevelStruct.bodies.entrySet())
-			gdxRenderer.drawShape(camera, entry.getKey(), entry.getValue(), spriteBatch);
 		spriteBatch.end();
 		tiledMeshRenderer.render(camera);
 		
