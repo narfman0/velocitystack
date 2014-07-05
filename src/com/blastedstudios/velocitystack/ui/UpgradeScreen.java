@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.Properties;
+import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 
@@ -20,13 +21,15 @@ public class UpgradeScreen extends AbstractScreen{
 	private final Window window;
 	private final String name;
 	private final IRemovedListener listener;
+	private final ScreenLevelPanner panner;
 	
 	public UpgradeScreen(final GDXGame game, Skin skin, final String name, 
-			final Preferences preferences, final IRemovedListener listener) {
+			final Preferences preferences, final IRemovedListener listener, ScreenLevelPanner panner) {
 		super(game, skin);
 		this.name = name;
 		this.preferences = preferences;
 		this.listener = listener;
+		this.panner = panner;
 		window = new Window("Upgrade " + name, skin);
 		rebuildUI(window, name, listener);
 		window.pack();
@@ -84,6 +87,7 @@ public class UpgradeScreen extends AbstractScreen{
 
 	@Override public void render(float delta){
 		super.render(delta);
+		panner.render();
 		stage.draw();
 	}
 }

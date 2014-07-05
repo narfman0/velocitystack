@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.GDXGame;
 import com.blastedstudios.gdxworld.util.Properties;
+import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.velocitystack.ui.MainCarTable.ICarTableListener;
@@ -28,10 +29,12 @@ import com.blastedstudios.velocitystack.util.IRemovedListener;
 class MainWindow extends Window{
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
+	private final ScreenLevelPanner panner;
 	
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
-			final File worldFile, final GDXRenderer gdxRenderer, Stage stage) {
+			final File worldFile, final GDXRenderer gdxRenderer, Stage stage, ScreenLevelPanner panner) {
 		super("Velocity Stack", skin);
+		this.panner = panner;
 		preferences.getLong("cash", 0);//set default if not existing
 		cashLabel = new Label("-----------", skin);
 		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, "Truck");
@@ -67,7 +70,7 @@ class MainWindow extends Window{
 						rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
 					}
 				};
-				game.pushScreen(new UpgradeScreen(game, skin, name, preferences, listener));
+				game.pushScreen(new UpgradeScreen(game, skin, name, preferences, listener, panner));
 			}
 		};
 		int selectedIndex = 0, i=0;
