@@ -9,11 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.blastedstudios.velocitystack.util.IRemovedListener;
+import com.blastedstudios.gdxworld.ui.AbstractScreen;
+import com.blastedstudios.gdxworld.util.GDXGame;
 
-public class MainHelp extends Window {
-	public MainHelp(final Skin skin, final IRemovedListener listener) {
-		super("Help", skin);
+public class HelpScreen extends AbstractScreen{
+	public HelpScreen(final GDXGame game, Skin skin) {
+		super(game, skin);
 		String[] directions = new String[]{
 				"Objective: Collect cash bundles by running over them, reaching the finish line. You may quit early by " +
 						"hitting the top right exit button or pressing escape, with a 50% cash penality",
@@ -29,18 +30,25 @@ public class MainHelp extends Window {
 			directionTable.add(label).width(Gdx.graphics.getWidth());
 			directionTable.row();
 		}
-        add(directionTable);
-		row();
+		Window window = new Window("Help", skin);
+		window.add(directionTable);
+		window.row();
 		final TextButton backButton = new TextButton("Back", skin);
 		backButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				listener.removed();
+				game.popScreen();
 			}
 		});
-		add(backButton);
-		pack();
-		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
-		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
-		setMovable(false);
+		window.add(backButton);
+		window.pack();
+		window.setX(Gdx.graphics.getWidth()/2 - window.getWidth()/2);
+		window.setY(Gdx.graphics.getHeight()/2 - window.getHeight()/2);
+		window.setMovable(false);
+		stage.addActor(window);
+	}
+
+	@Override public void render(float delta){
+		super.render(delta);
+		stage.draw();
 	}
 }

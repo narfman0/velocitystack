@@ -28,7 +28,6 @@ import com.blastedstudios.velocitystack.util.IRemovedListener;
 class MainWindow extends Window{
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
-	private Window helpWindow;
 	
 	public MainWindow(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
 			final File worldFile, final GDXRenderer gdxRenderer, Stage stage) {
@@ -116,14 +115,20 @@ class MainWindow extends Window{
 		add(levelTable);
 		row();
 		
+		Table controlsTable = new Table();
+		final TextButton helpButton = new TextButton("Help", skin);
+		helpButton.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				game.pushScreen(new HelpScreen(game, skin));
+			}
+		});
+		controlsTable.add(helpButton);
 		final TextButton exitButton = new TextButton("Exit", skin);
 		exitButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
 			}
 		});
-		Table controlsTable = new Table();
-		controlsTable.add(createHelpButton(skin, stage));
 		controlsTable.add(exitButton);
 		add(controlsTable);
 	}
@@ -132,24 +137,6 @@ class MainWindow extends Window{
 		pack();
 		setX(Gdx.graphics.getWidth()/2 - getWidth()/2);
 		setY(Gdx.graphics.getHeight()/2 - getHeight()/2);
-	}
-	
-	private TextButton createHelpButton(final Skin skin, final Stage stage){
-		final IRemovedListener listener = new IRemovedListener() {
-			@Override public void removed() {
-				if(helpWindow != null)
-					helpWindow.remove();
-				helpWindow = null;
-			}
-		};
-		final TextButton controlsButton = new TextButton("Help", skin);
-		controlsButton.addListener(new ClickListener() {
-			@Override public void clicked(InputEvent event, float x, float y) {
-				if(helpWindow == null)
-					stage.addActor(helpWindow = new MainHelp(skin, listener));
-			}
-		});
-		return controlsButton;
 	}
 
 	public void addCash(long cashGained) {
