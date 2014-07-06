@@ -37,37 +37,38 @@ class MainWindow extends Window{
 		this.panner = panner;
 		preferences.getLong("cash", 0);//set default if not existing
 		cashLabel = new Label("-----------", skin);
-		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, "Truck");
+		rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, "Truck", 0);
 		repack();
 		setMovable(false);
 	}
 	
 	private void rebuildUI(final Skin skin, final GDXGame game, final GDXWorld gdxWorld, 
-			final File worldFile, final GDXRenderer gdxRenderer, final Stage stage, final String activeCar){
+			final File worldFile, final GDXRenderer gdxRenderer, final Stage stage, final String activeCar, 
+			int currentLevelIndex){
 		clear();
 		add(cashLabel);
 		updateCashLabel();
 		row();
-		Table levelTable = new Table();
+		final List<LevelNameContainer> levelList = new List<>(skin);
 		
 		final HashMap<String, Integer> carCashMap = new HashMap<>();
 		for(String carCash : Properties.get("car.cash.map", "Truck,100;Dune Buggy,7500;Monster,25000").split(";"))
 			carCashMap.put(carCash.split(",")[0], Integer.parseInt(carCash.split(",")[1]));
-		final String owned = preferences.getString("cars.owned", "Truck");
+		final String carsOwned = preferences.getString("cars.owned", "Truck");
 		add(new Label("Choose car:", skin));
 		row();
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
 		Array<MainCarTable> carTableArray = new Array<>();
 		ICarTableListener buyListener = new ICarTableListener() {
 			@Override public void buy(String name, int cost) {
-				preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck") + "," + name);
+				preferences.putString("cars.owned", carsOwned + "," + name);
 				addCash(-cost);
-				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
+				rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name, levelList.getSelectedIndex());
 			}
 			@Override public void upgrade(final String name) {
 				IRemovedListener listener = new IRemovedListener() {
 					@Override public void removed() {
-						rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name);
+						rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, name, levelList.getSelectedIndex());
 					}
 				};
 				game.pushScreen(new UpgradeScreen(game, skin, name, preferences, listener, panner));
@@ -82,7 +83,7 @@ class MainWindow extends Window{
 				selectedIndex = i;
 			else i++;
 			carTableArray.add(new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
-					owned.contains(carPretty), buyListener, preferences.getLong("cash")));
+					carsOwned.contains(carPretty), buyListener, preferences.getLong("cash")));
 		}
 		final List<MainCarTable> carList = new List<>(skin);
 		carList.setItems(carTableArray);
@@ -103,21 +104,49 @@ class MainWindow extends Window{
 		
 		add(new Label("Choose level:", skin));
 		row();
-		for(final GDXLevel level : gdxWorld.getLevels()){
-			final TextButton button = new TextButton(level.getName(), skin);
-			button.addListener(new ClickListener() {
-				@Override public void clicked(InputEvent event, float x, float y) {
-					if(owned.contains(carList.getSelected().name))
-						game.pushScreen(new GameplayScreen(game, skin, level, gdxRenderer, 
-								worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this,
-								preferences.getLong("cash"), preferences));
-				}
-			});
-			levelTable.add(button);
-		}
-		add(levelTable);
+		Array<LevelNameContainer> levelNameContainers = new Array<>();
+		for(GDXLevel level : gdxWorld.getLevels())
+			levelNameContainers.add(new LevelNameContainer(level.getName(), level, Long.parseLong(level.getProperties().get("Cost"))));
+		levelNameContainers.addAll();
+		levelList.setItems(levelNameContainers);
+		levelList.setSelectedIndex(currentLevelIndex);
+		add(levelList);
 		row();
-		
+		final Table startBuyLevelTable = new Table();
+		final TextButton startButton = new TextButton("Start", skin);
+		final String levelsOwned = preferences.getString("levels.owned", "Plains");
+		levelList.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				startBuyLevelTable.clear();
+				if(levelsOwned.contains(levelList.getSelected().name))
+					startBuyLevelTable.add(startButton);
+				else{
+					final long cost = levelList.getSelected().cost;
+					TextButton buyLevelButton = new TextButton("Buy for " + cost + "$", skin);
+					buyLevelButton.addListener(new ClickListener() {
+						@Override public void clicked(InputEvent event, float x, float y) {
+							preferences.putString("levels.owned", levelsOwned + "," + levelList.getSelected().name);
+							addCash(-cost);
+							rebuildUI(skin, game, gdxWorld, worldFile, gdxRenderer, stage, 
+									carList.getSelected().name, levelList.getSelectedIndex());
+						}
+					});
+					startBuyLevelTable.add(buyLevelButton);
+				}
+			}
+		});
+		startButton.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				if(carsOwned.contains(carList.getSelected().name))
+					game.pushScreen(new GameplayScreen(game, skin, levelList.getSelected().level, gdxRenderer, 
+							worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this,
+							preferences.getLong("cash"), preferences));
+			}
+		});
+		if(levelsOwned.contains(levelList.getSelected().name))
+			startBuyLevelTable.add(startButton);
+		add(startBuyLevelTable);
+		row();
 		Table controlsTable = new Table();
 		final TextButton helpButton = new TextButton("Help", skin);
 		helpButton.addListener(new ClickListener() {
@@ -150,5 +179,21 @@ class MainWindow extends Window{
 
 	private void updateCashLabel() {
 		cashLabel.setText("Current cash: " + preferences.getLong("cash") + "$");
+	}
+	
+	private class LevelNameContainer{
+		public final String name;
+		public final GDXLevel level;
+		public final long cost;
+		
+		LevelNameContainer(String name, GDXLevel level, long cost){
+			this.name = name;
+			this.level = level;
+			this.cost = cost;
+		}
+		
+		@Override public String toString(){
+			return name;
+		}
 	}
 }

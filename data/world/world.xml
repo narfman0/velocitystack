@@ -2558,7 +2558,12 @@
       <groups/>
       <particles/>
       <sounds/>
-      <properties/>
+      <properties class="tree-map">
+        <entry>
+          <string>Cost</string>
+          <string>0</string>
+        </entry>
+      </properties>
       <lightAmbient>0</lightAmbient>
     </world.GDXLevel>
     <world.GDXLevel>
@@ -3770,8 +3775,8 @@
           <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
           <manifestation class="plugin.quest.manifestation.beingspawn.BeingSpawnManifestation">
             <coordinates>
-              <x>50.572723</x>
-              <y>0.08963719</y>
+              <x>52.915627</x>
+              <y>4.207272</y>
             </coordinates>
             <being>player</being>
             <path></path>
@@ -3841,7 +3846,12 @@
       <groups/>
       <particles/>
       <sounds/>
-      <properties class="tree-map"/>
+      <properties class="tree-map">
+        <entry>
+          <string>Cost</string>
+          <string>1000</string>
+        </entry>
+      </properties>
       <lightAmbient>-437918337</lightAmbient>
     </world.GDXLevel>
   </levels>

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.blastedstudios.gdxworld.util.Properties;
 
 public class MainCarTable extends Table{
 	public final String name;
@@ -17,9 +18,11 @@ public class MainCarTable extends Table{
 			final long cash){
 		this.name = name;
 		this.handle = carFile;
-		add(GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
-				carFile.pathWithoutExtension()+"_Buy.png"));
-		row();
+		if(Properties.getBool("car.table.showcar", false)){
+			add(GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
+					carFile.pathWithoutExtension()+"_Buy.png"));
+			row();
+		}
 		if(!owned){
 			final TextButton buyButton = new TextButton("Buy for " + cost + "$", skin);
 			buyButton.addListener(new ClickListener() {
