@@ -17,8 +17,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>7.707495</x>
-            <y>-17.993446</y>
+            <x>-16.418383</x>
+            <y>-10.772801</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -28,36 +28,40 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-12.345701</x>
-              <y>17.331198</y>
+              <x>11.780176</x>
+              <y>10.110553</y>
             </Vector2>
             <Vector2>
-              <x>13.726479</x>
-              <y>17.312574</y>
+              <x>37.852356</x>
+              <y>10.091929</y>
             </Vector2>
             <Vector2>
-              <x>15.332941</x>
-              <y>17.557049</y>
+              <x>39.458817</x>
+              <y>10.336404</y>
             </Vector2>
             <Vector2>
-              <x>16.75677</x>
-              <y>18.006828</y>
+              <x>40.882645</x>
+              <y>10.786183</y>
             </Vector2>
             <Vector2>
-              <x>18.117315</x>
-              <y>18.494087</y>
+              <x>42.243195</x>
+              <y>11.273442</y>
             </Vector2>
             <Vector2>
-              <x>20.468847</x>
-              <y>-78.5587</y>
+              <x>44.594727</x>
+              <y>-85.77934</y>
             </Vector2>
             <Vector2>
-              <x>-35.601765</x>
-              <y>-76.59818</y>
+              <x>-101.92964</x>
+              <y>-83.67058</y>
             </Vector2>
             <Vector2>
-              <x>-36.454884</x>
-              <y>66.45515</y>
+              <x>-102.49715</x>
+              <y>57.53324</y>
+            </Vector2>
+            <Vector2>
+              <x>-12.385122</x>
+              <y>59.31816</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -2944,8 +2948,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>-21.064295</x>
-            <y>-4.6652718</y>
+            <x>-50.646725</x>
+            <y>-4.3864784</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -2955,28 +2959,28 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-2.9357033</x>
-              <y>3.465273</y>
+              <x>26.646727</x>
+              <y>3.1864796</y>
             </Vector2>
             <Vector2>
-              <x>34.044434</x>
-              <y>3.278554</y>
+              <x>63.62686</x>
+              <y>2.9997606</y>
             </Vector2>
             <Vector2>
-              <x>12.584465</x>
-              <y>-44.270275</y>
+              <x>42.166893</x>
+              <y>-44.54907</y>
             </Vector2>
             <Vector2>
-              <x>-19.469038</x>
-              <y>-38.61472</y>
+              <x>-79.68593</x>
+              <y>-38.099354</y>
             </Vector2>
             <Vector2>
-              <x>-20.402372</x>
-              <y>38.58527</y>
+              <x>-78.51517</x>
+              <y>39.185078</y>
             </Vector2>
             <Vector2>
-              <x>-3.8217812</x>
-              <y>37.555897</y>
+              <x>25.760649</x>
+              <y>37.277103</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -3440,8 +3444,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>173.71085</x>
-            <y>-35.363056</y>
+            <x>173.70642</x>
+            <y>-35.363277</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -3451,356 +3455,356 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-46.311172</x>
-              <y>15.136576</y>
+              <x>-46.306747</x>
+              <y>15.136797</y>
             </Vector2>
             <Vector2>
-              <x>-51.373672</x>
-              <y>15.364389</y>
+              <x>-51.369247</x>
+              <y>15.364611</y>
             </Vector2>
             <Vector2>
-              <x>-51.452774</x>
-              <y>16.598373</y>
+              <x>-51.44835</x>
+              <y>16.598595</y>
             </Vector2>
             <Vector2>
-              <x>-36.97148</x>
-              <y>16.532204</y>
+              <x>-36.967056</x>
+              <y>16.532425</y>
             </Vector2>
             <Vector2>
-              <x>-35.441055</x>
-              <y>16.23234</y>
+              <x>-35.43663</x>
+              <y>16.232561</y>
             </Vector2>
             <Vector2>
-              <x>-33.455154</x>
-              <y>15.346329</y>
+              <x>-33.45073</x>
+              <y>15.34655</y>
             </Vector2>
             <Vector2>
-              <x>-31.622025</x>
-              <y>13.207687</y>
+              <x>-31.6176</x>
+              <y>13.207909</y>
             </Vector2>
             <Vector2>
-              <x>-30.603622</x>
-              <y>11.00794</y>
+              <x>-30.599197</x>
+              <y>11.008162</y>
             </Vector2>
             <Vector2>
-              <x>-29.740067</x>
-              <y>9.257004</y>
+              <x>-29.735641</x>
+              <y>9.257225</y>
             </Vector2>
             <Vector2>
-              <x>-27.265274</x>
-              <y>8.47579</y>
+              <x>-27.260849</x>
+              <y>8.476011</y>
             </Vector2>
             <Vector2>
-              <x>-25.32283</x>
-              <y>8.755505</y>
+              <x>-25.494675</x>
+              <y>8.692831</y>
             </Vector2>
             <Vector2>
-              <x>-24.62355</x>
-              <y>9.781115</y>
+              <x>-24.619125</x>
+              <y>9.781336</y>
             </Vector2>
             <Vector2>
-              <x>-24.001968</x>
-              <y>10.620251</y>
+              <x>-23.997543</x>
+              <y>10.620472</y>
             </Vector2>
             <Vector2>
-              <x>-23.22499</x>
-              <y>11.645866</y>
+              <x>-23.220566</x>
+              <y>11.646088</y>
             </Vector2>
             <Vector2>
-              <x>-22.603409</x>
-              <y>12.112053</y>
+              <x>-22.598984</x>
+              <y>12.112274</y>
             </Vector2>
             <Vector2>
-              <x>-22.059525</x>
-              <y>12.298527</y>
+              <x>-22.0551</x>
+              <y>12.298748</y>
             </Vector2>
             <Vector2>
-              <x>-21.437943</x>
-              <y>12.298527</y>
+              <x>-21.433517</x>
+              <y>12.298748</y>
             </Vector2>
             <Vector2>
-              <x>-20.583267</x>
-              <y>11.366154</y>
+              <x>-20.578842</x>
+              <y>11.366375</y>
             </Vector2>
             <Vector2>
-              <x>-19.96167</x>
-              <y>9.967592</y>
+              <x>-19.957245</x>
+              <y>9.9678135</y>
             </Vector2>
             <Vector2>
-              <x>-19.495499</x>
-              <y>8.755505</y>
+              <x>-19.491074</x>
+              <y>8.755726</y>
             </Vector2>
             <Vector2>
-              <x>-18.718506</x>
-              <y>7.7298946</y>
+              <x>-18.71408</x>
+              <y>7.730116</y>
             </Vector2>
             <Vector2>
-              <x>-16.526337</x>
-              <y>6.6948414</y>
+              <x>-16.521912</x>
+              <y>6.6950626</y>
             </Vector2>
             <Vector2>
-              <x>-12.371262</x>
-              <y>6.743725</y>
+              <x>-12.366837</x>
+              <y>6.743946</y>
             </Vector2>
             <Vector2>
-              <x>-9.988205</x>
-              <y>7.965805</y>
+              <x>-9.98378</x>
+              <y>7.9660263</y>
             </Vector2>
             <Vector2>
-              <x>-9.397522</x>
-              <y>8.576847</y>
+              <x>-9.393097</x>
+              <y>8.577068</y>
             </Vector2>
             <Vector2>
-              <x>-8.969803</x>
-              <y>9.285654</y>
+              <x>-8.965378</x>
+              <y>9.285875</y>
             </Vector2>
             <Vector2>
-              <x>-8.462402</x>
-              <y>10.527016</y>
+              <x>-8.457977</x>
+              <y>10.527237</y>
             </Vector2>
             <Vector2>
-              <x>-7.607727</x>
-              <y>11.739101</y>
+              <x>-7.603302</x>
+              <y>11.739323</y>
             </Vector2>
             <Vector2>
-              <x>-6.9861298</x>
-              <y>11.83234</y>
+              <x>-6.9817047</x>
+              <y>11.8325615</y>
             </Vector2>
             <Vector2>
-              <x>-5.58757</x>
-              <y>10.340542</y>
+              <x>-5.583145</x>
+              <y>10.340763</y>
             </Vector2>
             <Vector2>
-              <x>-5.043686</x>
-              <y>8.196081</y>
+              <x>-5.039261</x>
+              <y>8.196302</y>
             </Vector2>
             <Vector2>
-              <x>-4.655197</x>
-              <y>6.704281</y>
+              <x>-4.650772</x>
+              <y>6.704502</y>
             </Vector2>
             <Vector2>
-              <x>-4.111313</x>
-              <y>5.678671</y>
+              <x>-4.106888</x>
+              <y>5.678892</y>
             </Vector2>
             <Vector2>
-              <x>-3.101242</x>
-              <y>5.1192474</y>
+              <x>-3.096817</x>
+              <y>5.1194687</y>
             </Vector2>
             <Vector2>
-              <x>-2.6350555</x>
-              <y>5.026005</y>
+              <x>-2.6306305</x>
+              <y>5.026226</y>
             </Vector2>
             <Vector2>
-              <x>-2.168869</x>
-              <y>4.9327755</y>
+              <x>-2.164444</x>
+              <y>4.9329967</y>
             </Vector2>
             <Vector2>
-              <x>-1.1587982</x>
-              <y>4.9327755</y>
+              <x>-1.1543732</x>
+              <y>4.9329967</y>
             </Vector2>
             <Vector2>
-              <x>0.006668091</x>
-              <y>4.4665833</y>
+              <x>0.01109314</x>
+              <y>4.4668045</y>
             </Vector2>
             <Vector2>
-              <x>1.6383209</x>
-              <y>3.1612625</y>
+              <x>1.642746</x>
+              <y>3.1614838</y>
             </Vector2>
             <Vector2>
-              <x>2.3376007</x>
-              <y>1.0167999</y>
+              <x>2.3420258</x>
+              <y>1.0170212</y>
             </Vector2>
             <Vector2>
-              <x>2.6483917</x>
-              <y>-0.6614723</y>
+              <x>2.6528168</x>
+              <y>-0.66125107</y>
             </Vector2>
             <Vector2>
-              <x>3.0368805</x>
-              <y>-2.2465096</y>
+              <x>3.0413055</x>
+              <y>-2.2462883</y>
             </Vector2>
             <Vector2>
-              <x>3.4253693</x>
-              <y>-3.9247818</y>
+              <x>3.4297943</x>
+              <y>-3.9245605</y>
             </Vector2>
             <Vector2>
-              <x>4.0469513</x>
-              <y>-6.442196</y>
+              <x>4.0513763</x>
+              <y>-6.4419746</y>
             </Vector2>
             <Vector2>
-              <x>4.6685333</x>
-              <y>-8.213703</y>
+              <x>4.6729584</x>
+              <y>-8.213482</y>
             </Vector2>
             <Vector2>
-              <x>5.9116974</x>
-              <y>-9.705502</y>
+              <x>5.9161224</x>
+              <y>-9.70528</y>
             </Vector2>
             <Vector2>
-              <x>7.7764435</x>
-              <y>-11.104061</y>
+              <x>7.7808685</x>
+              <y>-11.10384</y>
             </Vector2>
             <Vector2>
-              <x>9.7966</x>
-              <y>-11.943203</y>
+              <x>9.801025</x>
+              <y>-11.942982</y>
             </Vector2>
             <Vector2>
-              <x>11.972137</x>
-              <y>-12.4093895</y>
+              <x>11.9765625</x>
+              <y>-12.409168</y>
             </Vector2>
             <Vector2>
-              <x>13.836884</x>
-              <y>-12.316151</y>
+              <x>13.841309</x>
+              <y>-12.315929</y>
             </Vector2>
             <Vector2>
-              <x>15.779327</x>
-              <y>-11.477013</y>
+              <x>15.783752</x>
+              <y>-11.476791</y>
             </Vector2>
             <Vector2>
-              <x>17.566376</x>
-              <y>-9.425793</y>
+              <x>17.5708</x>
+              <y>-9.425571</y>
             </Vector2>
             <Vector2>
-              <x>18.498749</x>
-              <y>-8.027229</y>
+              <x>18.503174</x>
+              <y>-8.027008</y>
             </Vector2>
             <Vector2>
-              <x>20.363495</x>
-              <y>-4.484207</y>
+              <x>20.36792</x>
+              <y>-4.483986</y>
             </Vector2>
             <Vector2>
-              <x>20.751984</x>
-              <y>-4.2044945</y>
+              <x>20.756409</x>
+              <y>-4.204273</y>
             </Vector2>
             <Vector2>
-              <x>21.218185</x>
-              <y>-4.2044945</y>
+              <x>21.22261</x>
+              <y>-4.204273</y>
             </Vector2>
             <Vector2>
-              <x>21.917465</x>
-              <y>-5.0436287</y>
+              <x>21.92189</x>
+              <y>-5.0434074</y>
             </Vector2>
             <Vector2>
-              <x>22.383652</x>
-              <y>-6.255718</y>
+              <x>22.388077</x>
+              <y>-6.255497</y>
             </Vector2>
             <Vector2>
-              <x>22.539047</x>
-              <y>-7.0948563</y>
+              <x>22.543472</x>
+              <y>-7.094635</y>
             </Vector2>
             <Vector2>
-              <x>22.383682</x>
-              <y>-7.840767</y>
+              <x>22.388107</x>
+              <y>-7.8405457</y>
             </Vector2>
             <Vector2>
-              <x>22.228287</x>
-              <y>-9.4258</y>
+              <x>22.232712</x>
+              <y>-9.425579</y>
             </Vector2>
             <Vector2>
-              <x>22.072891</x>
-              <y>-11.477024</y>
+              <x>22.077316</x>
+              <y>-11.476803</y>
             </Vector2>
             <Vector2>
-              <x>22.150589</x>
-              <y>-12.502636</y>
+              <x>22.155014</x>
+              <y>-12.502415</y>
             </Vector2>
             <Vector2>
-              <x>23.316055</x>
-              <y>-13.34177</y>
+              <x>23.32048</x>
+              <y>-13.341549</y>
             </Vector2>
             <Vector2>
-              <x>25.180817</x>
-              <y>-13.807957</y>
+              <x>25.185242</x>
+              <y>-13.807735</y>
             </Vector2>
             <Vector2>
-              <x>25.957779</x>
-              <y>-13.621487</y>
+              <x>25.962204</x>
+              <y>-13.621265</y>
             </Vector2>
             <Vector2>
-              <x>26.657074</x>
-              <y>-12.68911</y>
+              <x>26.661499</x>
+              <y>-12.688889</y>
             </Vector2>
             <Vector2>
-              <x>26.890152</x>
-              <y>-11.29055</y>
+              <x>26.894577</x>
+              <y>-11.290329</y>
             </Vector2>
             <Vector2>
-              <x>26.501663</x>
-              <y>-9.612274</y>
+              <x>26.506088</x>
+              <y>-9.612053</y>
             </Vector2>
             <Vector2>
-              <x>26.113174</x>
-              <y>-8.306953</y>
+              <x>26.1176</x>
+              <y>-8.306732</y>
             </Vector2>
             <Vector2>
-              <x>25.880096</x>
-              <y>-7.3745766</y>
+              <x>25.884521</x>
+              <y>-7.3743553</y>
             </Vector2>
             <Vector2>
-              <x>25.7247</x>
-              <y>-6.815151</y>
+              <x>25.729126</x>
+              <y>-6.81493</y>
             </Vector2>
             <Vector2>
-              <x>25.413895</x>
-              <y>-5.230118</y>
+              <x>25.41832</x>
+              <y>-5.2298965</y>
             </Vector2>
             <Vector2>
-              <x>25.336212</x>
-              <y>-4.39098</y>
+              <x>25.127594</x>
+              <y>-4.347145</y>
             </Vector2>
             <Vector2>
-              <x>25.880096</x>
-              <y>-4.111267</y>
+              <x>25.884521</x>
+              <y>-4.111046</y>
             </Vector2>
             <Vector2>
-              <x>27.12326</x>
-              <y>-4.111267</y>
+              <x>27.127686</x>
+              <y>-4.111046</y>
             </Vector2>
             <Vector2>
-              <x>28.444122</x>
-              <y>-4.950405</y>
+              <x>28.448547</x>
+              <y>-4.950184</y>
             </Vector2>
             <Vector2>
-              <x>29.143402</x>
-              <y>-6.255726</y>
+              <x>29.147827</x>
+              <y>-6.2555046</y>
             </Vector2>
             <Vector2>
-              <x>29.842682</x>
-              <y>-7.7475243</y>
+              <x>29.847107</x>
+              <y>-7.747303</y>
             </Vector2>
             <Vector2>
-              <x>31.163544</x>
-              <y>-9.612274</y>
+              <x>31.167969</x>
+              <y>-9.612053</y>
             </Vector2>
             <Vector2>
-              <x>32.01822</x>
-              <y>-10.824364</y>
+              <x>32.022644</x>
+              <y>-10.824142</y>
             </Vector2>
             <Vector2>
-              <x>39.176147</x>
-              <y>-20.456821</y>
+              <x>39.180573</x>
+              <y>-20.4566</y>
             </Vector2>
             <Vector2>
-              <x>40.642654</x>
-              <y>-42.43185</y>
+              <x>40.64708</x>
+              <y>-42.43163</y>
             </Vector2>
             <Vector2>
-              <x>-37.67679</x>
-              <y>-37.5835</y>
+              <x>-37.672363</x>
+              <y>-37.58328</y>
             </Vector2>
             <Vector2>
-              <x>-34.18039</x>
-              <y>8.941973</y>
+              <x>-34.175964</x>
+              <y>8.942194</y>
             </Vector2>
             <Vector2>
-              <x>-35.423553</x>
-              <y>12.112053</y>
+              <x>-35.41913</x>
+              <y>12.112274</y>
             </Vector2>
             <Vector2>
-              <x>-36.666718</x>
-              <y>13.697084</y>
+              <x>-36.662292</x>
+              <y>13.697306</y>
             </Vector2>
             <Vector2>
-              <x>-38.37607</x>
-              <y>14.815937</y>
+              <x>-38.371643</x>
+              <y>14.816158</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -4216,8 +4220,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>324.35718</x>
-            <y>-106.529366</y>
+            <x>323.72964</x>
+            <y>-106.51457</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -4227,20 +4231,20 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-8.631409</x>
-              <y>-0.64141846</y>
+              <x>-9.262939</x>
+              <y>-0.547142</y>
             </Vector2>
             <Vector2>
-              <x>-8.614197</x>
-              <y>0.24640656</y>
+              <x>-9.237762</x>
+              <y>0.18172455</y>
             </Vector2>
             <Vector2>
-              <x>8.582062</x>
-              <y>0.68650055</y>
+              <x>9.209595</x>
+              <y>0.67170715</y>
             </Vector2>
             <Vector2>
-              <x>8.663544</x>
-              <y>-0.29148865</y>
+              <x>9.291077</x>
+              <y>-0.30628204</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -5547,8 +5551,8 @@
           <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
           <manifestation class="plugin.quest.manifestation.beingspawn.BeingSpawnManifestation">
             <coordinates>
-              <x>459.69986</x>
-              <y>-111.859566</y>
+              <x>-17.252605</x>
+              <y>1.8047403</y>
             </coordinates>
             <being>player</being>
             <path></path>
@@ -5857,6 +5861,84 @@
           </trigger>
           <manifestation class="plugin.quest.manifestation.endlevel.EndLevelManifestation">
             <success>true</success>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-22</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>166.86652</x>
+              <y>-21.417597</y>
+            </position>
+            <amount>50</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-23</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>167.65578</x>
+              <y>-20.382465</y>
+            </position>
+            <amount>50</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-24</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>311.82727</x>
+              <y>-108.15339</y>
+            </position>
+            <amount>25</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-25</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>554.3762</x>
+              <y>-127.87803</y>
+            </position>
+            <amount>50</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-26</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>556.9874</x>
+              <y>-128.38985</y>
+            </position>
+            <amount>50</amount>
+          </manifestation>
+        </world.quest.GDXQuest>
+        <world.quest.GDXQuest>
+          <name>Quest-27</name>
+          <prerequisites></prerequisites>
+          <repeatable>false</repeatable>
+          <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
+          <manifestation class="com.blastedstudios.velocitystack.quest.moneybag.MoneyBagManifestation">
+            <position>
+              <x>559.24255</x>
+              <y>-130.21774</y>
+            </position>
+            <amount>50</amount>
           </manifestation>
         </world.quest.GDXQuest>
       </quests>
