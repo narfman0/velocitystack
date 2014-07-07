@@ -4300,8 +4300,8 @@
           <restitution>0.3</restitution>
           <bodyType>StaticBody</bodyType>
           <center>
-            <x>353.2688</x>
-            <y>-118.78104</y>
+            <x>354.37094</x>
+            <y>-118.8243</y>
           </center>
           <filter>
             <categoryBits>1</categoryBits>
@@ -4311,76 +4311,84 @@
           <repeatable>true</repeatable>
           <vertices>
             <Vector2>
-              <x>-20.162567</x>
-              <y>6.32872</y>
+              <x>-21.26471</x>
+              <y>6.3719864</y>
             </Vector2>
             <Vector2>
-              <x>-6.4060974</x>
-              <y>6.3569794</y>
+              <x>-7.5082397</x>
+              <y>6.4002457</y>
             </Vector2>
             <Vector2>
-              <x>-6.567444</x>
-              <y>13.257652</y>
+              <x>-7.669586</x>
+              <y>13.300919</y>
             </Vector2>
             <Vector2>
-              <x>-5.328003</x>
-              <y>12.5807495</y>
+              <x>-6.4301453</x>
+              <y>12.624016</y>
             </Vector2>
             <Vector2>
-              <x>-3.7409973</x>
-              <y>11.084427</y>
+              <x>-4.8431396</x>
+              <y>11.127693</y>
             </Vector2>
             <Vector2>
-              <x>-2.7963257</x>
-              <y>9.76947</y>
+              <x>-3.898468</x>
+              <y>9.8127365</y>
             </Vector2>
             <Vector2>
-              <x>-2.1917725</x>
-              <y>8.318489</y>
+              <x>-3.2939148</x>
+              <y>8.361755</y>
             </Vector2>
             <Vector2>
-              <x>-1.5871887</x>
-              <y>6.5954514</y>
+              <x>-2.689331</x>
+              <y>6.6387177</y>
             </Vector2>
             <Vector2>
-              <x>-0.7558899</x>
-              <y>4.237602</y>
+              <x>-1.8580322</x>
+              <y>4.2808685</y>
             </Vector2>
             <Vector2>
-              <x>0.45324707</x>
-              <y>2.1064758</y>
+              <x>-0.64889526</x>
+              <y>2.1497421</y>
             </Vector2>
             <Vector2>
-              <x>1.0578308</x>
-              <y>1.3809814</y>
+              <x>-0.044311523</x>
+              <y>1.4242477</y>
             </Vector2>
             <Vector2>
-              <x>4.1940613</x>
-              <y>-0.7501526</y>
+              <x>3.091919</x>
+              <y>-0.7068863</y>
             </Vector2>
             <Vector2>
-              <x>6.0455933</x>
-              <y>-1.3849564</y>
+              <x>4.943451</x>
+              <y>-1.3416901</y>
             </Vector2>
             <Vector2>
-              <x>10.277618</x>
-              <y>-1.793045</y>
+              <x>7.6000366</x>
+              <y>-1.6227646</y>
             </Vector2>
             <Vector2>
-              <x>13.0737915</x>
-              <y>-0.2060318</y>
+              <x>9.879211</x>
+              <y>-1.4139252</y>
             </Vector2>
             <Vector2>
-              <x>14.3585205</x>
-              <y>2.695938</y>
+              <x>11.32724</x>
+              <y>-0.44879913</y>
             </Vector2>
             <Vector2>
-              <x>19.384003</x>
-              <y>-40.697495</y>
+              <x>12.395477</x>
+              <y>0.7503052</y>
             </Vector2>
             <Vector2>
-              <x>-19.308868</x>
-              <y>-39.881317</y>
+              <x>13.034027</x>
+              <y>2.7400436</y>
+            </Vector2>
+            <Vector2>
+              <x>18.369843</x>
+              <y>-40.59429</y>
+            </Vector2>
+            <Vector2>
+              <x>-20.49292</x>
+              <y>-39.85482</y>
             </Vector2>
           </vertices>
         </world.shape.GDXPolygon>
@@ -5551,8 +5559,8 @@
           <trigger class="plugin.quest.trigger.activate.ActivateTrigger"/>
           <manifestation class="plugin.quest.manifestation.beingspawn.BeingSpawnManifestation">
             <coordinates>
-              <x>-17.252605</x>
-              <y>1.8047403</y>
+              <x>-9.1145935</x>
+              <y>1.3635707</y>
             </coordinates>
             <being>player</being>
             <path></path>
