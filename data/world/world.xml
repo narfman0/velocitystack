@@ -6058,6 +6058,84 @@
       </properties>
       <lightAmbient>-437918337</lightAmbient>
     </world.GDXLevel>
+    <world.GDXLevel>
+      <name>Cloud</name>
+      <coordinates>
+        <x>1.9333353</x>
+        <y>-6.8172474</y>
+      </coordinates>
+      <tiles/>
+      <circles/>
+      <polygons>
+        <world.shape.GDXPolygon>
+          <name>Polygon-0</name>
+          <resource>metal1.png</resource>
+          <density>1.0</density>
+          <friction>0.5</friction>
+          <restitution>0.3</restitution>
+          <bodyType>StaticBody</bodyType>
+          <center>
+            <x>2.622222</x>
+            <y>-7.912388</y>
+          </center>
+          <filter>
+            <categoryBits>1</categoryBits>
+            <maskBits>-1</maskBits>
+            <groupIndex>0</groupIndex>
+          </filter>
+          <repeatable>true</repeatable>
+          <vertices>
+            <Vector2>
+              <x>-23.222221</x>
+              <y>4.791239</y>
+            </Vector2>
+            <Vector2>
+              <x>24.711113</x>
+              <y>3.6413412</y>
+            </Vector2>
+            <Vector2>
+              <x>-1.4888916</x>
+              <y>-8.432579</y>
+            </Vector2>
+          </vertices>
+        </world.shape.GDXPolygon>
+      </polygons>
+      <npcs/>
+      <paths/>
+      <joints/>
+      <quests/>
+      <backgrounds>
+        <world.GDXBackground>
+          <coordinates>
+            <x>0.0</x>
+            <y>0.0</y>
+          </coordinates>
+          <texture>sky.png</texture>
+          <scissor>false</scissor>
+          <scissorPosition>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorPosition>
+          <scissorDimensions>
+            <x>0.0</x>
+            <y>0.0</y>
+          </scissorDimensions>
+          <depth>100.0</depth>
+          <scale>0.08</scale>
+        </world.GDXBackground>
+      </backgrounds>
+      <lights/>
+      <groups/>
+      <particles/>
+      <sounds/>
+      <properties class="tree-map">
+        <entry>
+          <string>Cost</string>
+          <string>2000</string>
+        </entry>
+      </properties>
+      <lightAmbient>-437918337</lightAmbient>
+    </world.GDXLevel>
   </levels>
   <worldProperties>
     <entry>
