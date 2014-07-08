@@ -1,6 +1,7 @@
 package com.blastedstudios.velocitystack.util;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
@@ -51,6 +52,8 @@ public class Car {
 		fWheelSprite.setScale(VelocityStack.SPRITE_SCALE);
 		bodySprite = new Sprite(new Texture("data/textures/car/" + group.getShape("body").getResource()));
 		bodySprite.setScale(VelocityStack.SPRITE_SCALE);
+		for(Entry<String,Body> entries : bodies.entrySet())
+			entries.getValue().setUserData(this);
 	}
 	
 	private void applyUpgrades(Preferences preferences, String prettyName){

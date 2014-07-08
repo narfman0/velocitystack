@@ -19,12 +19,14 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
 		Body a = contact.getFixtureA().getBody(), b = contact.getFixtureB().getBody();
 		MoneyBag moneyBag = (MoneyBag) (a.getUserData() instanceof MoneyBag ? a.getUserData() :
 			b.getUserData() instanceof MoneyBag ? b.getUserData() : null);
-		if(moneyBag != null){
+		Car car = (Car) (a.getUserData() instanceof Car ? a.getUserData() :
+			b.getUserData() instanceof Car ? b.getUserData() : null);
+		if(moneyBag != null && car != null){
 			screen.receiveMoney(moneyBag.amount);
 			moneyBag.body.setUserData(ContactListener.REMOVE_USER_DATA);
 			contact.setEnabled(false);
 		}
-		if(ContactListener.REMOVE_USER_DATA.equals(a.getUserData()) || 
+		if(moneyBag != null || ContactListener.REMOVE_USER_DATA.equals(a.getUserData()) || 
 				ContactListener.REMOVE_USER_DATA.equals(b.getUserData()))
 			contact.setEnabled(false);
 	}

@@ -16,7 +16,7 @@ public class EndLevelHandler implements IEndLevelHandler, IGameplayScreenConsume
 	}
 	
 	@Override public CompletionEnum endLevel(boolean success) {
-		screen.exit(false);
+		screen.exit(!success);
 		return CompletionEnum.COMPLETED;
 	}
 }
