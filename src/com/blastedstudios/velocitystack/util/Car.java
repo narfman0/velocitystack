@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -95,6 +96,18 @@ public class Car {
 	
 	public Vector2 getVelocity(){
 		return body.getLinearVelocity();
+	}
+	
+	public float getMaxMotorSpeed(){
+		return (fWheelJoint.getMotorSpeed() + rWheelJoint.getMotorSpeed()) / 2f;
+	}
+	
+	public float getCurrentMotorSpeed(){
+		return (fWheel.getAngularVelocity() + rWheel.getAngularVelocity()) / 2f;
+	}
+	
+	public float getMotorPitch(){
+		return MathUtils.clamp(MathUtils.lerp(.5f, 2f, getCurrentMotorSpeed()/getMaxMotorSpeed()), .5f, 2f);
 	}
 	
 	public void gas(boolean enable, boolean reverse){

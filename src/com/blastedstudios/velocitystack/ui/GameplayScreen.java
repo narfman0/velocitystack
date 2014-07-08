@@ -5,6 +5,7 @@ import java.io.File;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
+import com.blastedstudios.gdxworld.plugin.mode.sound.SoundManager;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.ui.leveleditor.LevelEditorScreen;
@@ -52,6 +54,9 @@ public class GameplayScreen extends AbstractScreen {
 	private final MainWindow mainWindow;
 	private final long bank;
 	private final Vector2 startLocation = new Vector2();
+	private final Sound idleSound, moneySound;
+	private final long idleSoundId;
+	private final Preferences preferences;
 	private Window gameplayMenu, gameplayEndLevelWindow;
 	private long cash;
 	
@@ -66,6 +71,7 @@ public class GameplayScreen extends AbstractScreen {
 		this.mainWindow = mainWindow;
 		this.bank = bank;
 		this.cash = 0;
+		this.preferences = preferences;
 		world.setContactListener(new ContactListener(this));
 		hud = new GameplayHUD(this);
 		
@@ -79,6 +85,10 @@ public class GameplayScreen extends AbstractScreen {
 
 		//delay car initialization until after quest has set starting location
 		car = new Car(world, startLocation, carFileHandle, gdxRenderer, preferences);
+		
+		moneySound = SoundManager.getSound(Properties.get("money.sound", "chaching.mp3"));
+		idleSound = SoundManager.getSound(Properties.get("car." + carFileHandle.nameWithoutExtension() + ".sound", "idle1.ogg"));
+		idleSoundId = idleSound.loop(((float)preferences.getInteger("volume"))/10f);
 	}
 	
 	@Override public void render(float dt){
@@ -93,6 +103,7 @@ public class GameplayScreen extends AbstractScreen {
 			car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || 
 					Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake());
 		}
+		idleSound.setPitch(idleSoundId, car.getMotorPitch());
 		world.step(Math.min(1f/20f, dt), 10, 10);
 		questManager.tick();
 		camera.position.set(car.getPosition(), 0);
@@ -171,6 +182,7 @@ public class GameplayScreen extends AbstractScreen {
 	}
 
 	public void receiveMoney(long amount) {
+		moneySound.play(preferences.getFloat("volume"));
 		cash += amount;
 	}
 
@@ -183,6 +195,7 @@ public class GameplayScreen extends AbstractScreen {
 		long cashEarned = early ? cash/2 : cash;
 		mainWindow.addCash(cashEarned);
 		stage.addActor(gameplayEndLevelWindow = new GameplayEndLevelWindow(skin, this, early, cashEarned));
+		idleSound.stop();
 	}
 
 	public Car getCar() {

@@ -148,6 +148,15 @@ class MainWindow extends Window{
 		add(startBuyLevelTable);
 		row();
 		Table controlsTable = new Table();
+		final TextButton volumeButton = new TextButton(getVolumeLabel(), skin);
+		volumeButton.addListener(new ClickListener() {
+			@Override public void clicked(InputEvent event, float x, float y) {
+				preferences.putInteger("volume", (preferences.getInteger("volume", 5)+1) % 11);
+				preferences.flush();
+				volumeButton.setText(getVolumeLabel());
+			}
+		});
+		controlsTable.add(volumeButton);
 		final TextButton helpButton = new TextButton("Help", skin);
 		helpButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
@@ -175,6 +184,10 @@ class MainWindow extends Window{
 		preferences.putLong("cash", preferences.getLong("cash") + cashGained);
 		preferences.flush();
 		updateCashLabel();
+	}
+	
+	private String getVolumeLabel(){
+		return "Volume: " + preferences.getInteger("volume", 5);
 	}
 
 	private void updateCashLabel() {
