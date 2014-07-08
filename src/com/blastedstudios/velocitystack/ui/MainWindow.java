@@ -52,7 +52,7 @@ class MainWindow extends Window{
 		final List<LevelNameContainer> levelList = new List<>(skin);
 		
 		final HashMap<String, Integer> carCashMap = new HashMap<>();
-		for(String carCash : Properties.get("car.cash.map", "Truck,100;Dune Buggy,7500;Monster,25000").split(";"))
+		for(String carCash : Properties.get("car.cash.map", "Truck,100;Dune Buggy,2500;Monster,5000").split(";"))
 			carCashMap.put(carCash.split(",")[0], Integer.parseInt(carCash.split(",")[1]));
 		final String carsOwned = preferences.getString("cars.owned", "Truck");
 		add(new Label("Choose car:", skin));

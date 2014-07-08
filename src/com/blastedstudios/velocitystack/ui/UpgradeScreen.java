@@ -76,7 +76,7 @@ public class UpgradeScreen extends AbstractScreen{
 	}
 	
 	private long levelCost(long level){
-		return Properties.getLong("upgrade.cost.scalar", 1000) * (level+1);
+		return Properties.getLong("upgrade.cost.scalar", 500) * (level+1);
 	}
 
 	private void addCash(long cashGained) {
