@@ -2,6 +2,7 @@ package com.blastedstudios.velocitystack.ui;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -106,11 +107,12 @@ class MainWindow extends Window{
 		
 		add(new Label("Choose level:", skin));
 		row();
-		Array<LevelNameContainer> levelNameContainers = new Array<>();
-		for(GDXLevel level : gdxWorld.getLevels())
-			levelNameContainers.add(new LevelNameContainer(level.getName(), level, Long.parseLong(level.getProperties().get("Cost"))));
-		levelNameContainers.addAll();
-		levelList.setItems(levelNameContainers);
+		LevelNameContainer[] levelNameContainerArray = new LevelNameContainer[gdxWorld.getLevels().size()];
+		for(int j=0; j<gdxWorld.getLevels().size(); j++)
+			levelNameContainerArray[j] = new LevelNameContainer(gdxWorld.getLevels().get(j).getName(), gdxWorld.getLevels().get(j),
+					Long.parseLong(gdxWorld.getLevels().get(j).getProperties().get("Cost")));
+		Arrays.sort(levelNameContainerArray, new LevelNameContainerCostComparator());
+		levelList.setItems(new Array<>(levelNameContainerArray));
 		levelList.setSelectedIndex(currentLevelIndex);
 		add(levelList);
 		row();
@@ -210,5 +212,12 @@ class MainWindow extends Window{
 		@Override public String toString(){
 			return name;
 		}
+	}
+	
+	public class LevelNameContainerCostComparator implements Comparator<LevelNameContainer>{
+		@Override public int compare(LevelNameContainer o1, LevelNameContainer o2) {
+			return ((Long)o1.cost).compareTo(o2.cost);
+		}
+		
 	}
 }

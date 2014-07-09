@@ -88,7 +88,7 @@ public class GameplayScreen extends AbstractScreen {
 		
 		moneySound = SoundManager.getSound(Properties.get("money.sound", "chaching.mp3"));
 		idleSound = SoundManager.getSound(Properties.get("car." + carFileHandle.nameWithoutExtension() + ".sound", "idle1.ogg"));
-		idleSoundId = idleSound.loop(((float)preferences.getInteger("volume"))/10f);
+		idleSoundId = idleSound.loop(((float)preferences.getInteger("volume", 5))/10f);
 	}
 	
 	@Override public void render(float dt){
@@ -182,7 +182,7 @@ public class GameplayScreen extends AbstractScreen {
 	}
 
 	public void receiveMoney(long amount) {
-		moneySound.play(preferences.getFloat("volume"));
+		moneySound.play(preferences.getFloat("volume", 5));
 		cash += amount;
 	}
 
