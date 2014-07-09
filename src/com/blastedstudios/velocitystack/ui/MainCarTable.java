@@ -1,5 +1,7 @@
 package com.blastedstudios.velocitystack.ui;
 
+import java.util.Comparator;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -12,12 +14,14 @@ import com.blastedstudios.gdxworld.util.Properties;
 public class MainCarTable extends Table{
 	public final String name;
 	public final FileHandle handle;
+	public final int cost;
 	
 	public MainCarTable(final Skin skin, final String name, final int cost, 
 			final FileHandle carFile, boolean owned, final ICarTableListener buyListener,
 			final long cash){
 		this.name = name;
 		this.handle = carFile;
+		this.cost = cost;
 		if(Properties.getBool("car.table.showcar", false)){
 			add(GameplayHUD.createButton(carFile.pathWithoutExtension()+"_Buy.png", 
 					carFile.pathWithoutExtension()+"_Buy.png"));
@@ -51,5 +55,11 @@ public class MainCarTable extends Table{
 	public interface ICarTableListener{
 		void buy(String name, int cost);
 		void upgrade(String name);
+	}
+	
+	public static class MainCarTableCostComparator implements Comparator<MainCarTable>{
+		@Override public int compare(MainCarTable source, MainCarTable target) {
+			return ((Integer)source.cost).compareTo(target.cost);
+		}
 	}
 }

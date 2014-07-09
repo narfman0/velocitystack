@@ -1,6 +1,7 @@
 package com.blastedstudios.velocitystack.ui;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -23,6 +24,7 @@ import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.gdxworld.world.GDXLevel;
 import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.velocitystack.ui.MainCarTable.ICarTableListener;
+import com.blastedstudios.velocitystack.ui.MainCarTable.MainCarTableCostComparator;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 
@@ -58,7 +60,6 @@ class MainWindow extends Window{
 		add(new Label("Choose car:", skin));
 		row();
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
-		Array<MainCarTable> carTableArray = new Array<>();
 		ICarTableListener buyListener = new ICarTableListener() {
 			@Override public void buy(String name, int cost) {
 				preferences.putString("cars.owned", carsOwned + "," + name);
@@ -74,6 +75,7 @@ class MainWindow extends Window{
 				game.pushScreen(new UpgradeScreen(game, skin, name, preferences, listener, panner));
 			}
 		};
+		MainCarTable[] carTableArray = new MainCarTable[cars.length/2];
 		int selectedIndex = 0, i=0;
 		for(final FileHandle carFile : cars){
 			if(!carFile.extension().equals("json"))
@@ -81,12 +83,12 @@ class MainWindow extends Window{
 			final String carPretty = Car.carHandleToName(carFile);
 			if(carPretty.equals(activeCar))
 				selectedIndex = i;
-			else i++;
-			carTableArray.add(new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
-					carsOwned.contains(carPretty), buyListener, preferences.getLong("cash")));
+			carTableArray[i++] = new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
+					carsOwned.contains(carPretty), buyListener, preferences.getLong("cash"));
 		}
+		Arrays.sort(carTableArray, new MainCarTableCostComparator());
 		final List<MainCarTable> carList = new List<>(skin);
-		carList.setItems(carTableArray);
+		carList.setItems(new Array<>(carTableArray));
 		final Table carTable = new Table();
 		carList.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
