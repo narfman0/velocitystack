@@ -26,6 +26,9 @@ public class AndroidLauncher extends AndroidApplication {
 			
 			//zoom
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.util.ZoomProvider.class),
+			
+			//android specific
+			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HelpProviderPlugin.class),
 		};
 		initialize(new VelocityStack(false, true, uris), config);
 	}

@@ -11,16 +11,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
+import com.blastedstudios.gdxworld.util.PluginUtil;
+import com.blastedstudios.velocitystack.util.IHelpProvider;
+import com.blastedstudios.velocitystack.util.IHelpProvider.HelpStruct;
 
 public class HelpScreen extends AbstractScreen{
 	public HelpScreen(final GDXGame game, Skin skin) {
 		super(game, skin);
+		HelpStruct current = new HelpStruct("D key, or right arrow", "S key, space key, or down arrow", "A key, or left arrow");
+		for(IHelpProvider provider : PluginUtil.getPlugins(IHelpProvider.class))
+			current = provider.getHelp();
 		String[] directions = new String[]{
 				"Objective: Collect cash bundles by running over them, reaching the finish line. You may quit early by " +
 						"hitting the top right exit button or pressing escape, with a 50% cash penality",
-				"Accelerate: hit bottom right pedal, D key, or right arrow",
-				"Brake: hit bottom middle pedal, S key, space key, or down arrow",
-				"Reverse: hit bottom left pedal, A key, or left arrow"
+				"Accelerate: " + current.accel,//hit bottom right pedal, D key, or right arrow",
+				"Brake: " + current.brake,//hit bottom middle pedal, S key, space key, or down arrow",
+				"Reverse: " + current.reverse,//hit bottom left pedal, A key, or left arrow"
 		};
 		Table directionTable = new Table();
 		for(String direction : directions){
