@@ -11,17 +11,18 @@ import com.blastedstudios.velocitystack.ui.LoadScreen;
 import com.blastedstudios.velocitystack.ui.MainScreen;
 
 public class VelocityStack extends GDXGame {
-	private final boolean usePanner;
+	private final boolean usePanner, horizontal;
 	private final URI[] uris;
 	
-	public VelocityStack(boolean usePanner, URI... uris){
+	public VelocityStack(boolean usePanner, boolean horizontal, URI... uris){
 		this.usePanner = usePanner;
+		this.horizontal = horizontal;
 		this.uris = uris;
 	}
 	
 	@Override public void create () {
 		PluginUtil.initialize(uris);
 		Skin skin = new Skin(Gdx.files.internal(Properties.get("screen.skin","data/ui/uiskinGame.json")));
-		pushScreen(new LoadScreen(this, skin, MainScreen.class, this, skin, usePanner));
+		pushScreen(new LoadScreen(this, skin, MainScreen.class, this, skin, usePanner, horizontal));
 	}
 }

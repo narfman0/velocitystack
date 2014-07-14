@@ -8,6 +8,6 @@ import com.blastedstudios.velocitystack.VelocityStack;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		new LwjglApplication(new VelocityStack(true, ClassURI.CLASSPATH), GDXWorldEditor.generateConfiguration("Velocity Stack"));
+		new LwjglApplication(new VelocityStack(true, false, ClassURI.CLASSPATH), GDXWorldEditor.generateConfiguration("Velocity Stack"));
 	}
 }

@@ -17,11 +17,11 @@ public class MainScreen extends AbstractScreen {
 	private final GDXRenderer gdxRenderer;
 	private final ScreenLevelPanner panner;
 
-	public MainScreen(final GDXGame game, Skin skin, boolean usePanner){
+	public MainScreen(final GDXGame game, Skin skin, boolean usePanner, boolean horizontal){
 		super(game, skin);
 		gdxRenderer = new GDXRenderer(true, true);
 		panner = usePanner ? new ScreenLevelPanner(gdxWorld, gdxRenderer) : null;
-		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer, stage, panner));
+		stage.addActor(new MainWindow(skin, game, gdxWorld, WORLD_FILE, gdxRenderer, panner, horizontal));
 	}
 
 	@Override public void render(float delta){

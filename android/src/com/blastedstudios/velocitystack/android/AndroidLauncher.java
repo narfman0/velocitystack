@@ -10,8 +10,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.blastedstudios.velocitystack.VelocityStack;
 
 public class AndroidLauncher extends AndroidApplication {
-	@Override
-	protected void onCreate (Bundle savedInstanceState) {
+	@Override protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		//need to list each uri individually so android doesn't search forever and a day
@@ -28,6 +27,6 @@ public class AndroidLauncher extends AndroidApplication {
 			//zoom
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.util.ZoomProvider.class),
 		};
-		initialize(new VelocityStack(false, uris), config);
+		initialize(new VelocityStack(false, true, uris), config);
 	}
 }
