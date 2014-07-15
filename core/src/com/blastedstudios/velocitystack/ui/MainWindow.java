@@ -52,6 +52,7 @@ class MainWindow extends Window{
 		//set default if not existing
 		preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck"));
 		preferences.putLong("cash", preferences.getLong("cash", 0));
+		preferences.flush();
 		cashLabel = new Label("-----------", skin);
 		rebuildUI("Truck", 0);
 		repack();
@@ -78,7 +79,7 @@ class MainWindow extends Window{
 	
 	private Table createCarTable(final List<LevelNameContainer> levelList, final List<MainCarTable> carList, String activeCar){
 		final HashMap<String, Integer> carCashMap = new HashMap<>();
-		for(String carCash : Properties.get("car.cash.map", "Truck,100;Dune Buggy,2500;Monster,5000").split(";"))
+		for(String carCash : Properties.get("car.cash.map", "Truck,0;Dune Buggy,2500;Monster,5000").split(";"))
 			carCashMap.put(carCash.split(",")[0], Integer.parseInt(carCash.split(",")[1]));
 		final String carsOwned = preferences.getString("cars.owned");
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
