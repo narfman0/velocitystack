@@ -158,6 +158,7 @@ public class GameplayScreen extends AbstractScreen {
 			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Keys.CONTROL_LEFT))
 				Properties.set("debug.draw", (!Properties.getBool("debug.draw"))+"");
 			break;
+		case Keys.BACK:
 		case Keys.ESCAPE:
 			if(inputEnabled()){
 				car.brake(true);

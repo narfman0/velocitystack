@@ -2,6 +2,7 @@ package com.blastedstudios.velocitystack.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -90,5 +91,15 @@ public class UpgradeScreen extends AbstractScreen{
 		if(panner != null)
 			panner.render();
 		stage.draw();
+	}
+	
+	@Override public boolean keyDown(int key) {
+		switch(key){
+		case Keys.BACK:
+		case Keys.ESCAPE:
+			game.popScreen();
+			break;
+		}
+		return false;
 	}
 }

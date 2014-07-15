@@ -1,6 +1,7 @@
 package com.blastedstudios.velocitystack.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -51,6 +52,16 @@ public class HelpScreen extends AbstractScreen{
 		window.setY(Gdx.graphics.getHeight()/2 - window.getHeight()/2);
 		window.setMovable(false);
 		stage.addActor(window);
+	}
+	
+	@Override public boolean keyDown(int key) {
+		switch(key){
+		case Keys.BACK:
+		case Keys.ESCAPE:
+			game.popScreen();
+			break;
+		}
+		return false;
 	}
 
 	@Override public void render(float delta){

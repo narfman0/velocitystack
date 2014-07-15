@@ -23,6 +23,7 @@ public class VelocityStack extends GDXGame {
 	@Override public void create () {
 		PluginUtil.initialize(uris);
 		Skin skin = new Skin(Gdx.files.internal(Properties.get("screen.skin","data/ui/uiskinGame.json")));
+		Gdx.input.setCatchBackKey(true);
 		pushScreen(new LoadScreen(this, skin, MainScreen.class, this, skin, usePanner, horizontal));
 	}
 }
