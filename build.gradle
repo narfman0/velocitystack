@@ -13,7 +13,6 @@ buildscript {
 
 allprojects {
     apply plugin: "eclipse"
-    apply plugin: "idea"
 
     version = '1.0'
     ext {
@@ -32,7 +31,6 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "java"
-
 
     dependencies {
         compile project(":core")
@@ -82,7 +80,6 @@ project(":fire") {
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"

@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.blastedstudios.gdxworld.ui.GDXRenderer;
 import com.blastedstudios.gdxworld.util.GDXGame;
+import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.gdxworld.world.GDXLevel;
@@ -26,8 +27,10 @@ import com.blastedstudios.velocitystack.ui.MainCarTable.ICarTableListener;
 import com.blastedstudios.velocitystack.ui.MainCarTable.MainCarTableCostComparator;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
+import com.blastedstudios.velocitystack.util.ISaveUtility;
 
 class MainWindow extends Window{
+	public static final String CARS_OWNED_PREF = "cars.owned", CASH_PREF = "cash";
 	private final Label cashLabel;
 	private final Preferences preferences = Gdx.app.getPreferences("VelocityStackPrefs");
 	private final ScreenLevelPanner panner;
@@ -50,8 +53,15 @@ class MainWindow extends Window{
 		this.panner = panner;
 		this.horizontal = horizontal;
 		//set default if not existing
-		preferences.putString("cars.owned", preferences.getString("cars.owned", "Truck"));
-		preferences.putLong("cash", preferences.getLong("cash", 0));
+		preferences.putString(CARS_OWNED_PREF, preferences.getString(CARS_OWNED_PREF, "Truck"));
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class)){
+			String cars = saveUtility.get(CARS_OWNED_PREF);
+			if(cars.length() > preferences.getString(CARS_OWNED_PREF, "Truck").length())
+				preferences.putString(CARS_OWNED_PREF, cars);
+		}
+		preferences.putLong(CASH_PREF, preferences.getLong(CASH_PREF, 0));
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+			preferences.putLong(CASH_PREF, Math.max(preferences.getLong(CASH_PREF,  0), Long.parseLong(saveUtility.get(CASH_PREF))));
 		preferences.flush();
 		cashLabel = new Label("-----------", skin);
 		rebuildUI("Truck", 0);
@@ -81,12 +91,15 @@ class MainWindow extends Window{
 		final HashMap<String, Integer> carCashMap = new HashMap<>();
 		for(String carCash : Properties.get("car.cash.map", "Truck,0;Dune Buggy,2500;Monster,5000").split(";"))
 			carCashMap.put(carCash.split(",")[0], Integer.parseInt(carCash.split(",")[1]));
-		final String carsOwned = preferences.getString("cars.owned");
+		final String carsOwned = preferences.getString(CARS_OWNED_PREF);
 		FileHandle[] cars = Gdx.files.internal("data/world/cars/").list();
 		ICarTableListener buyListener = new ICarTableListener() {
 			@Override public void buy(String name, int cost) {
-				if(cost <= preferences.getLong("cash")){
-					preferences.putString("cars.owned", carsOwned + "," + name);
+				if(cost <= preferences.getLong(CASH_PREF)){
+					String newCarsOwned = carsOwned + "," + name;
+					preferences.putString(CARS_OWNED_PREF, newCarsOwned);
+					for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+						saveUtility.set(CARS_OWNED_PREF, newCarsOwned);
 					addCash(-cost);
 					rebuildUI(carList.getSelected().name, levelList.getSelectedIndex());
 				}
@@ -107,7 +120,7 @@ class MainWindow extends Window{
 				continue;
 			final String carPretty = Car.carHandleToName(carFile);
 			carTableArray[i++] = new MainCarTable(skin, carPretty, carCashMap.get(carPretty), carFile, 
-					carsOwned.contains(carPretty), buyListener, preferences.getLong("cash"));
+					carsOwned.contains(carPretty), buyListener, preferences.getLong(CASH_PREF));
 		}
 		Arrays.sort(carTableArray, new MainCarTableCostComparator());
 		carList.setItems(new Array<>(carTableArray));
@@ -189,7 +202,7 @@ class MainWindow extends Window{
 					TextButton buyLevelButton = new TextButton("Buy for " + cost + "$", skin);
 					buyLevelButton.addListener(new ClickListener() {
 						@Override public void clicked(InputEvent event, float x, float y) {
-							if(cost <= preferences.getLong("cash")){
+							if(cost <= preferences.getLong(CASH_PREF)){
 								preferences.putString("levels.owned", levelsOwned + "," + levelList.getSelected().name);
 								addCash(-cost);
 								rebuildUI(carList.getSelected().name, levelList.getSelectedIndex());
@@ -202,11 +215,11 @@ class MainWindow extends Window{
 		});
 		startButton.addListener(new ClickListener() {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				if(preferences.getString("cars.owned").contains(carList.getSelected().name))
+				if(preferences.getString(CARS_OWNED_PREF).contains(carList.getSelected().name))
 					game.pushScreen(new LoadScreen(game, skin, GameplayScreen.class, 
 							game, skin, levelList.getSelected().level, gdxRenderer, 
 							worldFile, gdxWorld, carList.getSelected().handle, MainWindow.this,
-							preferences.getLong("cash"), preferences));
+							preferences.getLong(CASH_PREF), preferences));
 			}
 		});
 		if(levelsOwned.contains(levelList.getSelected().name))
@@ -216,7 +229,7 @@ class MainWindow extends Window{
 			TextButton buyLevelButton = new TextButton("Buy for " + cost + "$", skin);
 			buyLevelButton.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
-					if(cost <= preferences.getLong("cash")){
+					if(cost <= preferences.getLong(CASH_PREF)){
 						preferences.putString("levels.owned", levelsOwned + "," + levelList.getSelected().name);
 						addCash(-cost);
 						rebuildUI(carList.getSelected().name, levelList.getSelectedIndex());
@@ -236,8 +249,10 @@ class MainWindow extends Window{
 	}
 
 	public void addCash(long cashGained) {
-		preferences.putLong("cash", preferences.getLong("cash") + cashGained);
+		preferences.putLong(CASH_PREF, preferences.getLong(CASH_PREF) + cashGained);
 		preferences.flush();
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+			saveUtility.set(CASH_PREF, preferences.getLong(CASH_PREF)+"");
 		updateCashLabel();
 	}
 	
@@ -246,7 +261,7 @@ class MainWindow extends Window{
 	}
 
 	private void updateCashLabel() {
-		cashLabel.setText("Current cash: " + preferences.getLong("cash") + "$");
+		cashLabel.setText("Current cash: " + preferences.getLong(CASH_PREF) + "$");
 	}
 	
 	private class LevelNameContainer{

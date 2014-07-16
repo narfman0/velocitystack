@@ -42,7 +42,7 @@ public class UpgradeScreen extends AbstractScreen{
 	public void rebuildUI(final Window window, final String name, final IRemovedListener listener){
 		window.clear();
 		Label cashLabel = new Label("------", skin);
-		cashLabel.setText("Current cash: " + preferences.getLong("cash") + "$");
+		cashLabel.setText("Current cash: " + preferences.getLong(MainWindow.CASH_PREF) + "$");
 		window.add(cashLabel).colspan(3);
 		window.row();
 		for(final String upgrade : Car.UPGRADES){
@@ -61,7 +61,7 @@ public class UpgradeScreen extends AbstractScreen{
 					rebuildUI(window, name, listener);
 				}
 			});
-			if(levelCost(upgradeLevel) > preferences.getLong("cash"))
+			if(levelCost(upgradeLevel) > preferences.getLong(MainWindow.CASH_PREF))
 				upgradeButton.setTouchable(Touchable.disabled);
 			window.add(upgradeButton);
 			window.row();
@@ -81,7 +81,7 @@ public class UpgradeScreen extends AbstractScreen{
 	}
 
 	private void addCash(long cashGained) {
-		preferences.putLong("cash", preferences.getLong("cash") + cashGained);
+		preferences.putLong(MainWindow.CASH_PREF, preferences.getLong(MainWindow.CASH_PREF) + cashGained);
 		preferences.flush();
 		rebuildUI(window, name, listener);
 	}
