@@ -9,6 +9,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.velocitystack.VelocityStack;
+import com.blastedstudios.velocitystack.util.IAssetChangeComponent;
 import com.blastedstudios.velocitystack.util.IZoomProvider;
 
 public class FireLauncher extends AndroidApplication {
@@ -32,9 +33,12 @@ public class FireLauncher extends AndroidApplication {
 			//fire specific
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.WhisperSyncSaveUtility.class),
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HeadTrackingProvider.class),
+			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HeroWidgetComponent.class),
 		};
 		initialize(new VelocityStack(false, true, uris), config);
 		for(IZoomProvider provider : PluginUtil.getPlugins(IZoomProvider.class))
 			provider.initialize(this);
+		for(IAssetChangeComponent component : PluginUtil.getPlugins(IAssetChangeComponent.class))
+			component.initialize(this);
 	}
 }

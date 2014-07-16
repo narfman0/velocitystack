@@ -26,6 +26,7 @@ import com.blastedstudios.gdxworld.world.GDXWorld;
 import com.blastedstudios.velocitystack.ui.MainCarTable.ICarTableListener;
 import com.blastedstudios.velocitystack.ui.MainCarTable.MainCarTableCostComparator;
 import com.blastedstudios.velocitystack.util.Car;
+import com.blastedstudios.velocitystack.util.IAssetChangeComponent;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 import com.blastedstudios.velocitystack.util.ISaveUtility;
 
@@ -87,6 +88,8 @@ class MainWindow extends Window{
 		clear();
 		add(cashLabel);
 		updateCashLabel();
+		for(IAssetChangeComponent component : PluginUtil.getPlugins(IAssetChangeComponent.class))
+			component.change(preferences.getLong(CASH_PREF), preferences.getString(CARS_OWNED_PREF));
 		row();
 		final List<LevelNameContainer> levelList = new List<>(skin);
 		final List<MainCarTable> carList = new List<>(skin);
@@ -110,7 +113,7 @@ class MainWindow extends Window{
 		ICarTableListener buyListener = new ICarTableListener() {
 			@Override public void buy(String name, int cost) {
 				if(cost <= preferences.getLong(CASH_PREF)){
-					String newCarsOwned = carsOwned + "," + name;
+					String newCarsOwned = carsOwned + ", " + name;
 					preferences.putString(CARS_OWNED_PREF, newCarsOwned);
 					for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
 						saveUtility.set(CARS_OWNED_PREF, newCarsOwned);

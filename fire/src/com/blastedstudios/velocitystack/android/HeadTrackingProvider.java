@@ -28,8 +28,7 @@ public class HeadTrackingProvider implements IZoomProvider, ICarController{
 		return Math.min(ZoomProvider.MAX_ZOOM, GameplayScreen.SPRITE_SCALE + screen.getCar().getVelocity().len()/1000f);
 	}
 
-	@Override
-	public void initialize(Object object) {
+	@Override public void initialize(Object object) {
 		HeadTrackingManager headTrackingManager = HeadTrackingManager.createInstance((Activity)object);
 		poller = headTrackingManager.registerPoller();
 		event = HeadTrackingEvent.obtain();
