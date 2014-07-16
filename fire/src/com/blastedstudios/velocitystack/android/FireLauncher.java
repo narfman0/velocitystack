@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.velocitystack.VelocityStack;
+import com.blastedstudios.velocitystack.util.IZoomProvider;
 
 public class FireLauncher extends AndroidApplication {
 	@Override protected void onCreate (Bundle savedInstanceState) {
@@ -24,15 +26,15 @@ public class FireLauncher extends AndroidApplication {
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.quest.handlers.EndLevelHandler.class),
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.quest.handlers.MoneyBagHandler.class),
 			
-			//zoom
-			ClassURI.PLUGIN(com.blastedstudios.velocitystack.util.ZoomProvider.class),
-			
 			//android specific
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HelpProviderPlugin.class),
 			
 			//fire specific
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.WhisperSyncSaveUtility.class),
+			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HeadTrackingZoomProvider.class),
 		};
 		initialize(new VelocityStack(false, true, uris), config);
+		for(IZoomProvider provider : PluginUtil.getPlugins(IZoomProvider.class))
+			provider.initialize(this);
 	}
 }

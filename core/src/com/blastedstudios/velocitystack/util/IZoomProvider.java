@@ -7,5 +7,6 @@ import com.blastedstudios.velocitystack.ui.GameplayScreen;
 
 @PluginImplementation
 public interface IZoomProvider extends Plugin{
+	void initialize(Object object);
 	float getZoom(GameplayScreen screen);
 }
