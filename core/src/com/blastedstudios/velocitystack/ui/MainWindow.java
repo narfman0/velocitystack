@@ -52,21 +52,35 @@ class MainWindow extends Window{
 		this.gdxRenderer = gdxRenderer;
 		this.panner = panner;
 		this.horizontal = horizontal;
-		//set default if not existing
-		preferences.putString(CARS_OWNED_PREF, preferences.getString(CARS_OWNED_PREF, "Truck"));
-		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class)){
-			String cars = saveUtility.get(CARS_OWNED_PREF);
-			if(cars.length() > preferences.getString(CARS_OWNED_PREF, "Truck").length())
-				preferences.putString(CARS_OWNED_PREF, cars);
-		}
-		preferences.putLong(CASH_PREF, preferences.getLong(CASH_PREF, 0));
-		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
-			preferences.putLong(CASH_PREF, Math.max(preferences.getLong(CASH_PREF,  0), Long.parseLong(saveUtility.get(CASH_PREF))));
-		preferences.flush();
+		initializePreferences();
 		cashLabel = new Label("-----------", skin);
 		rebuildUI("Truck", 0);
 		repack();
 		setMovable(false);
+	}
+	
+	private void initializePreferences(){
+		preferences.putString(CARS_OWNED_PREF, preferences.getString(CARS_OWNED_PREF, "Truck"));
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class)){
+			try{
+				String cars = saveUtility.get(CARS_OWNED_PREF);
+				if(cars.length() > preferences.getString(CARS_OWNED_PREF, "Truck").length())
+					preferences.putString(CARS_OWNED_PREF, cars);
+			}catch(Exception e){
+				Gdx.app.error("MainWindow.<init>", e.getMessage());
+			}
+		}
+		preferences.putLong(CASH_PREF, preferences.getLong(CASH_PREF, 0));
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class)){
+			long saveLong = 0;
+			try{
+				saveLong = Long.parseLong(saveUtility.get(CASH_PREF));
+			}catch(Exception e){
+				Gdx.app.error("MainWindow.<init>", e.getMessage());
+			}
+			preferences.putLong(CASH_PREF, Math.max(preferences.getLong(CASH_PREF,  0), saveLong));
+		}
+		preferences.flush();
 	}
 	
 	private void rebuildUI(final String activeCar, int currentLevelIndex){

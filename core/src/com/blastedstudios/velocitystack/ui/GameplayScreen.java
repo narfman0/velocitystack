@@ -30,6 +30,7 @@ import com.blastedstudios.velocitystack.quest.QuestManifestationExecutor;
 import com.blastedstudios.velocitystack.quest.QuestTriggerInformationProvider;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.ContactListener;
+import com.blastedstudios.velocitystack.util.ICarController;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
 import com.blastedstudios.velocitystack.util.IRenderComponent;
 import com.blastedstudios.velocitystack.util.IZoomProvider;
@@ -92,14 +93,20 @@ public class GameplayScreen extends AbstractScreen {
 	@Override public void render(float dt){
 		super.render(dt);
 		if(inputEnabled()){
-			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT) || hud.isGas())
+			boolean pluginGas = false, pluginReverse = false, pluginBrake = false;
+			for(ICarController controller : PluginUtil.getPlugins(ICarController.class)){
+				pluginGas |= controller.gas();
+				pluginReverse |= controller.reverse();
+				pluginBrake |= controller.brake();
+			}
+			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT) || hud.isGas() || pluginGas)
 				car.gas(true, false);
-			else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT) || hud.isReverse())
+			else if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT) || hud.isReverse() || pluginReverse)
 				car.gas(true, true);
 			else
 				car.gas(false, false);
 			car.brake(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.SPACE) || 
-					Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake());
+					Gdx.input.isKeyPressed(Keys.DOWN) || hud.isBrake() || pluginBrake);
 		}
 		idleSound.setPitch(idleSoundId, car.getMotorPitch());
 		world.step(Math.min(1f/20f, dt), 10, 10);

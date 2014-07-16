@@ -31,7 +31,7 @@ public class FireLauncher extends AndroidApplication {
 			
 			//fire specific
 			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.WhisperSyncSaveUtility.class),
-			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HeadTrackingZoomProvider.class),
+			ClassURI.PLUGIN(com.blastedstudios.velocitystack.android.HeadTrackingProvider.class),
 		};
 		initialize(new VelocityStack(false, true, uris), config);
 		for(IZoomProvider provider : PluginUtil.getPlugins(IZoomProvider.class))

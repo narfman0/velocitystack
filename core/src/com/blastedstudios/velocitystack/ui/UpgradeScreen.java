@@ -12,10 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.blastedstudios.gdxworld.ui.AbstractScreen;
 import com.blastedstudios.gdxworld.util.GDXGame;
+import com.blastedstudios.gdxworld.util.PluginUtil;
 import com.blastedstudios.gdxworld.util.Properties;
 import com.blastedstudios.gdxworld.util.ScreenLevelPanner;
 import com.blastedstudios.velocitystack.util.Car;
 import com.blastedstudios.velocitystack.util.IRemovedListener;
+import com.blastedstudios.velocitystack.util.ISaveUtility;
 
 public class UpgradeScreen extends AbstractScreen{
 	private final Preferences preferences;
@@ -47,17 +49,20 @@ public class UpgradeScreen extends AbstractScreen{
 		window.row();
 		for(final String upgrade : Car.UPGRADES){
 			window.add(new Label(upgrade+": ", skin));
-			final long upgradeLevel = preferences.getLong(name + "." + upgrade, 0);
+			final String key = name + "." + upgrade;
+			final long upgradeLevel = getUpgradeLevel(key, preferences);
 			final Label level = new Label(upgradeLevel+" ", skin);
 			window.add(level);
 			final TextButton upgradeButton = new TextButton("+ " + levelCost(upgradeLevel) + "$", skin);
 			upgradeButton.addListener(new ClickListener() {
 				@Override public void clicked(InputEvent event, float x, float y) {
 					addCash(-levelCost(upgradeLevel));
-					long levelLong = preferences.getLong(name + "." + upgrade) + 1;
+					long levelLong = preferences.getLong(key) + 1;
 					level.setText(levelLong+"");
 					preferences.putLong(name + "." + upgrade, levelLong);
 					preferences.flush();
+					for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+						saveUtility.set(key, levelLong+"");
 					rebuildUI(window, name, listener);
 				}
 			});
@@ -76,6 +81,17 @@ public class UpgradeScreen extends AbstractScreen{
 		window.add(okButton).colspan(3);
 	}
 	
+	private long getUpgradeLevel(String name, Preferences prefs){
+		long upgrade = preferences.getLong(name, 0);
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+			try{
+				upgrade = Long.parseLong(saveUtility.get(name));
+			}catch(Exception e){
+				Gdx.app.error("UpgradeScreen.getUpgradeLevel", e.getMessage());
+			}
+		return upgrade;
+	}
+	
 	private long levelCost(long level){
 		return Properties.getLong("upgrade.cost.scalar", 500) * (level+1);
 	}
@@ -83,6 +99,8 @@ public class UpgradeScreen extends AbstractScreen{
 	private void addCash(long cashGained) {
 		preferences.putLong(MainWindow.CASH_PREF, preferences.getLong(MainWindow.CASH_PREF) + cashGained);
 		preferences.flush();
+		for(ISaveUtility saveUtility : PluginUtil.getPlugins(ISaveUtility.class))
+			saveUtility.set(MainWindow.CASH_PREF, preferences.getLong(MainWindow.CASH_PREF)+"");
 		rebuildUI(window, name, listener);
 	}
 
