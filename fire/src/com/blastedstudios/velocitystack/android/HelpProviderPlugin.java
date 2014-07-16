@@ -7,6 +7,8 @@ import com.blastedstudios.velocitystack.util.IHelpProvider;
 @PluginImplementation
 public class HelpProviderPlugin implements IHelpProvider {
 	@Override public HelpStruct getHelp() {
-		return new HelpStruct("hit bottom right pedal", "hit bottom middle pedal", "hit bottom left pedal");
+		return new HelpStruct("hit bottom right pedal or twist device right",
+				"hit bottom middle pedal or twist device down",
+				"hit bottom left pedal or twist device left");
 	}
 }
